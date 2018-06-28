@@ -1,0 +1,13 @@
+setup.py
+realestateDeal.egg-info/PKG-INFO
+realestateDeal.egg-info/SOURCES.txt
+realestateDeal.egg-info/dependency_links.txt
+realestateDeal.egg-info/top_level.txt
+smallHouse/__init__.py
+smallHouse/items.py
+smallHouse/middlewares.py
+smallHouse/pipelines.py
+smallHouse/settings.py
+smallHouse/spiders/__init__.py
+smallHouse/spiders/realNews.py
+smallHouse/spiders/realestateDeal.py

@@ -1,0 +1,64 @@
+{% extends 'base_layout.html' %}
+
+{% block content %}
+<div id="map" style="height:800px; width: 100%;">
+    <div class="top_layer_nav">
+        <div class="top_layer_search">
+            <input type="search" class="top_layer_keyword"/>
+            <input type="button" class="top_layer_btn"/>
+        </div>
+        <div class="sub-filter">
+            <div class="sub-filter-layer">
+                <div class="menu-container">
+                    <ul>
+                        <li>매매</li>
+                        <li>전세</li>
+                        <li>상가</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="top_layer_info">
+        <div class="info_nav">
+            <div class="info_nav_text"></div>
+        </div>
+    </div>
+</div>
+<script>
+    var mapOptions = {
+        center: new naver.maps.LatLng(37.498189, 127.027642),
+        zoom: 10,
+        minZoom: 1, //지도의 최소 줌 레벨
+        zoomControl: true, //줌 컨트롤의 표시 여부
+        zoomControlOptions: { //줌 컨트롤의 옵션
+            position: naver.maps.Position.TOP_RIGHT
+        },
+        mapTypeControl: true,
+        mapTypeControlOptions: {
+            style: naver.maps.MapTypeControlStyle.BUTTON,
+            position: naver.maps.Position.TOP_RIGHT
+        }
+    };
+    var map = new naver.maps.Map('map', mapOptions);
+    {% comment %} map.setOptions({
+        scaleControl: true,
+        scaleControlOptions: {
+            position: naver.maps.Position.TOP_RIGHT
+        }
+    }); {% endcomment %}
+    
+    naver.maps.Service.geocode({
+        address: '불정로 6'
+    }, function(status, response) {
+        if (status !== naver.maps.Service.Status.OK) {
+            return alert('Something wrong!');
+        }
+
+        var result = response.result, // 검색 결과의 컨테이너
+            items = result.items; // 검색 결과의 배열
+
+        // do Something
+    });
+</script>
+{% endblock %}

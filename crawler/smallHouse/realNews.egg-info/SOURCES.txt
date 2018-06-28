@@ -1,0 +1,13 @@
+setup.py
+realNews.egg-info/PKG-INFO
+realNews.egg-info/SOURCES.txt
+realNews.egg-info/dependency_links.txt
+realNews.egg-info/top_level.txt
+smallHouse/__init__.py
+smallHouse/items.py
+smallHouse/middlewares.py
+smallHouse/pipelines.py
+smallHouse/settings.py
+smallHouse/spiders/__init__.py
+smallHouse/spiders/realNews.py
+smallHouse/spiders/realestateDeal.py
