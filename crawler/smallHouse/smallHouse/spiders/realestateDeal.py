@@ -3,8 +3,7 @@ import scrapy
 import re
 import sys
 from smallHouse.items import RealEstate
-import smallHouse.dao.getLocCode as getCode
-
+from smallHouse.dao.getLocCode import getCodeList 
 
 class RealestatedealSpider(scrapy.Spider):
     name = 'realestateDeal'
@@ -20,7 +19,7 @@ class RealestatedealSpider(scrapy.Spider):
     paramDEAL_YMD = "&DEAL_YMD=" + "201512"
 
     # db에 저장된 지역코드를 가져온다.
-    rows = getCode.getCodeList()
+    rows = getCodeList()
     paramLAWD_CDList = []
 
     fullUrlList = []
@@ -40,16 +39,6 @@ class RealestatedealSpider(scrapy.Spider):
     def parse(self, response):
         response.selector.remove_namespaces()
         data = response.xpath('//items')
-        schema = Schema({
-            'name': str,
-            'price': str,
-            'fnd_year': str,
-            'sold_date': str,
-            'location': str,
-            'loc_num': str,
-            'loc_cd': str,
-            'floor': str,
-        })
         for li in data:
             each = li.xpath('//item').extract()
             for e in each:

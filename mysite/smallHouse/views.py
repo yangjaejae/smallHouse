@@ -20,7 +20,6 @@ def getAddr(request):
         result = {}
         for li in addrList:
             temp = {}
-            temp['id'] = li.id
             temp['name'] = li.name
             temp['price'] = li.price
             temp['fnd_year'] = li.fnd_year
