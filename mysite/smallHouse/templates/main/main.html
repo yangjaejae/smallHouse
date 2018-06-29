@@ -1,10 +1,11 @@
 {% extends 'base_layout.html' %}
+{% load staticfiles %}
 
 {% block content %}
 <div id="map" style="height:800px; width: 100%;">
     <div class="top_layer_nav">
         <div class="top_layer_search">
-            <input type="search" class="top_layer_keyword"/>
+            <input type="text" class="top_layer_keyword" placeholder="검색어를 입력하세요"/>
             <input type="button" class="top_layer_btn"/>
         </div>
         <div class="sub-filter">
@@ -19,10 +20,24 @@
             </div>
         </div>
     </div>
-    <div class="top_layer_info">
-        <div class="info_nav">
-            <div class="info_nav_text"></div>
+    <div class="top_layer_info" style="overflow: scroll;">
+        <div class="info_nav" style="background-color: cornflowerblue; color:white; text-align:center;">
+            <h5>뉴스</h3>
         </div>
+            <div class="info_nav_text">
+                <table>
+                    {% for new in news %}
+                    <tr>
+                        <td>
+                            <a href="{{ new.url }}">
+                                <p>{{ new.title }}</p>
+                            </a>
+                            <p>-{{ new.newspaper }}-</p>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
     </div>
 </div>
 <script>
@@ -41,24 +56,70 @@
         }
     };
     var map = new naver.maps.Map('map', mapOptions);
-    {% comment %} map.setOptions({
-        scaleControl: true,
-        scaleControlOptions: {
-            position: naver.maps.Position.TOP_RIGHT
+
+    function getMarker(listMap){
+        
+        var dataList = listMap.result
+        for( var i=0; i < dataList.length; i++ ){
+            var addr = dataList[i].location + dataList[i].loc_num;
+            naver.maps.Service.geocode({
+                address: addr
+            }, function(status, response) {
+                if (status !== naver.maps.Service.Status.OK) {
+                    return alert('Something wrong!');
+                }
+                var result = response.result, // 검색 결과의 컨테이너
+                items = result.items; // 검색 결과의 배열
+                
+                var lng = items[0].point.x;
+                var lat = items[0].point.y;
+
+                var marker = new naver.maps.Marker({
+                    position: new naver.maps.LatLng(lat, lng),
+                    map: map,
+                    icon: {
+                        content: '<img src="{% static "img/marker_pin.png" %}" alt="" style="margin: 0px; padding: 0px; border: 0px solid transparent; display: block; max-width: none; max-height: none; -webkit-user-select: none; position: absolute; width: 22px; height: 35px; left: 0px; top: 0px;">',
+                        size: new naver.maps.Size(22, 35),
+                        anchor: new naver.maps.Point(11, 35)
+                    }
+                    {% comment %} id: dataList[i].id,
+                    name: dataList[i].name,
+                    price: dataList[i].price,
+                    fnd_year: dataList[i].fnd_year,
+                    sold_date: dataList[i].sold_date,
+                    location: dataList[i].location,
+                    loc_num: dataList[i].loc_num,
+                    loc_cd: dataList[i].loc_cd,
+                    floor: dataList[i].floor {% endcomment %}
+                });
+
+            });
         }
-    }); {% endcomment %}
+    }
     
-    naver.maps.Service.geocode({
-        address: '불정로 6'
-    }, function(status, response) {
-        if (status !== naver.maps.Service.Status.OK) {
-            return alert('Something wrong!');
-        }
+    $(document).ready(function(){
+        
+        $(".top_layer_btn").click(function(){
+            var word = $(".top_layer_keyword").val();
+            alert(word)
+            $.ajax({
+                type: 'GET',
+                url: '{% url "getAddress" %}', 
+                data: {
+                    "word": word
+                },
+                dataType: 'json',
+                error: function( jqXHR, textStatus, errorThrown ){
+                    alert('status: ' + textStatus + '\nerror: ' + jqXHR.error )
+                },
+                success: function(datas){
+                    getMarker(datas);
+                }
+            });
 
-        var result = response.result, // 검색 결과의 컨테이너
-            items = result.items; // 검색 결과의 배열
+        });
 
-        // do Something
     });
+
 </script>
 {% endblock %}
