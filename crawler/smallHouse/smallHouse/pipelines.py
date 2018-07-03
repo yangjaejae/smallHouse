@@ -16,7 +16,7 @@ class EstateDealPipeline(object):
 
     def process_item(self, item, spider):
         try:
-            self.cur.execute("INSERT INTO small_house_realestate(name,price,fnd_year,sold_date,location,loc_num,loc_cd,floor) VALUES(%s,%s,%s,%s,%s,%s,%s,%s)",(item['name'],item['price'],item['fnd_year'],item['sold_date'],item['location'],item['loc_num'],item['loc_cd'],item['floor']))
+            self.cur.execute("INSERT INTO small_house_realestate(es_name,price,fnd_year,sold_date,location,loc_num,loc_cd,floor) VALUES(%s,%s,%s,%s,%s,%s,%s,%s)",(item['name'],item['price'],item['fnd_year'],item['sold_date'],item['location'],item['loc_num'],item['loc_cd'],item['floor']))
             print("excute################################################################################excute################################################################################")
             self.connection.commit()
         except psycopg2.InternalError as e:
