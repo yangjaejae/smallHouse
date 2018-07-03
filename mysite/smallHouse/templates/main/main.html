@@ -2,28 +2,31 @@
 {% load staticfiles %}
 
 {% block content %}
-<div id="map" style="height:800px; width: 100%;">
-    <div class="top_layer_nav">
-        <div class="top_layer_search">
-            <input type="text" class="top_layer_keyword" placeholder="검색어를 입력하세요"/>
-            <input type="button" class="top_layer_btn"/>
-        </div>
-        <div class="sub-filter">
-            <div class="sub-filter-layer">
-                <div class="menu-container">
-                    <ul>
-                        <li>매매</li>
-                        <li>전세</li>
-                        <li>상가</li>
-                    </ul>
+<div id="map" class="map" style="height:800px; width: 100%;">
+    <div class="top_layer">
+        <div class="top_layer_nav">
+            <div class="input-group-lg top_layer_search">
+                <input type="text" class="top_layer_keyword" onkeypress="if( event.keyCode==13 ){goSearch();}" placeholder="검색어를 입력하세요(ex.서초동)"/>
+                <button class="btn btn-lg btn-default btn_search"></button>
+            </div>
+            <div class="sub-filter">
+                <div class="sub-filter-layer">
+                    <div class="menu-container">
+                        <ul>
+                            <li><a href="#" class="filter_news">뉴스</a></li>
+                            <li><a href="#" class="filter_sell">매매</a></li>
+                            <li><a href="#" class="filter_lent">전세</a></li>
+                            <li><a href="#" class="filter_store">상가</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="top_layer_info" style="overflow: scroll;">
-        <div class="info_nav" style="background-color: cornflowerblue; color:white; text-align:center;">
-            <h5>뉴스</h3>
-        </div>
+        <div class="top_layer_info" style="overflow: scroll;">
+            <div class="info_nav" style="background-color: cornflowerblue; color:white; text-align:center;">
+                <span><h3>뉴스</h3></span>
+                <span class="btn_toggle_content" style="color:white;">접기</span>
+            </div>
             <div class="info_nav_text">
                 <table>
                     {% for new in news %}
@@ -38,9 +41,87 @@
                     {% endfor %}
                 </table>
             </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3 wrap_info_house">
+        <div class="top_layer_nav">
+            <div class="input-group-lg top_layer_search">
+                <input type="text" class="top_layer_keyword" onkeypress="if( event.keyCode==13 ){goSearch();}" placeholder="검색어를 입력하세요(ex.서초동)"/>
+                <button class="btn btn-lg btn-default btn_search"></button>
+            </div>
+            <div class="sub-filter">
+                <div class="sub-filter-layer">
+                    <div class="menu-container">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="header_info">
+            <div class="house_title">
+                <span><a type="button" class="btn btn-default btn_back" style="float:left;"/></a></span>
+                <span><a href="#"><h4>하동 광교호수마을참누리 LAKE</h4></a></span>
+            </div>
+            <div class="text-center address_info">
+                <p> 경기도 수원시 영통구 하동 994 </p>
+                <p> 건축년도 : 2011 </p>
+            </div>
+        </div>
+        <div class="type_select">
+            <ul class="nav nav-tabs">
+                <li class="col-md-6 dropdown">
+                    <a data-toggle="dropdown" href="#">매매/전세<span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">매매</a></li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">전세</a></li>
+                    </ul>
+                <li class="col-md-6 dropdown">
+                    <a data-toggle="dropdown" href="#">주택<span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">다세대 연립</a></li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">단독 다가구</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="text-center realprice_avg" style="position: relative">
+            <div>최근 3개월 실거래 평균</div>
+            <div>7억 7,600</div>
+            <div><blockquote class="pull-right"><a href="#"><h6>국토교통부 거래가격</h6></a></blockquote></div>
+        </div>
+        <hr/>
+        <div class="realPrice_table">
+            <table class="table table-hover">
+                <tr>
+                    <th>계약일</th>
+                    <th>가격</th>
+                    <th>전용면적</th>
+                    <th>층</th>
+                </tr>
+                <tr>
+                    <td>2017.4</td>
+                    <td>12,000</td>
+                    <td>107.2</td>
+                    <td>3</td>
+                </tr>
+                <tr>
+                    <td>2017.4</td>
+                    <td>12,000</td>
+                    <td>107.2</td>
+                    <td>3</td>
+                </tr>
+                <tr>
+                    <td>2017.4</td>
+                    <td>12,000</td>
+                    <td>107.2</td>
+                    <td>3</td>
+                </tr>
+            </table>
+        </div>
     </div>
 </div>
 <script>
+    var marker = null;
     var mapOptions = {
         center: new naver.maps.LatLng(37.498189, 127.027642),
         zoom: 10,
@@ -56,7 +137,7 @@
         }
     };
     var map = new naver.maps.Map('map', mapOptions);
-
+    
     function getMarker(listMap){
         
         var dataList = listMap.result
@@ -66,59 +147,64 @@
                 address: addr
             }, function(status, response) {
                 if (status !== naver.maps.Service.Status.OK) {
-                    return alert('Something wrong!');
                 }
                 var result = response.result, // 검색 결과의 컨테이너
                 items = result.items; // 검색 결과의 배열
                 
                 var lng = items[0].point.x;
                 var lat = items[0].point.y;
-
-                var marker = new naver.maps.Marker({
+                marker = new naver.maps.Marker({
                     position: new naver.maps.LatLng(lat, lng),
-                    map: map,
-                    icon: {
-                        content: '<img src="{% static "img/marker_pin.png" %}" alt="" style="margin: 0px; padding: 0px; border: 0px solid transparent; display: block; max-width: none; max-height: none; -webkit-user-select: none; position: absolute; width: 22px; height: 35px; left: 0px; top: 0px;">',
-                        size: new naver.maps.Size(22, 35),
-                        anchor: new naver.maps.Point(11, 35)
-                    }
-                    {% comment %} 
-                    name: dataList[i].name,
-                    price: dataList[i].price,
-                    fnd_year: dataList[i].fnd_year,
-                    sold_date: dataList[i].sold_date,
-                    location: dataList[i].location,
-                    loc_num: dataList[i].loc_num,
-                    loc_cd: dataList[i].loc_cd,
-                    floor: dataList[i].floor 
-                    {% endcomment %}
+                    map: map
+                });
+
+                naver.maps.Event.addListener(marker, "click", function(e) {
+                    
+                    $(".top_layer").hide();
+                    $(".wrap_info_house").show();
+                
                 });
 
             });
         }
     }
+
+    function getAddr(){
+        var word = $(".top_layer_keyword").val();
+        $.ajax({
+            type: 'GET',
+            url: '{% url "getAddress" %}', 
+            data: {
+                "word": word
+            },
+            dataType: 'json',
+            error: function( jqXHR, textStatus, errorThrown ){
+                alert('status: ' + textStatus + '\nerror: ' + jqXHR.error )
+            },
+            success: function(datas){
+                getMarker(datas);
+            }
+        });
+    }
+
+    //엔터 클릭 시 검색
+    function goSearch(){
+        getAddr();
+    }
     
     $(document).ready(function(){
         
-        $(".top_layer_btn").click(function(){
-            var word = $(".top_layer_keyword").val();
-            alert(word)
-            $.ajax({
-                type: 'GET',
-                url: '{% url "getAddress" %}', 
-                data: {
-                    "word": word
-                },
-                dataType: 'json',
-                error: function( jqXHR, textStatus, errorThrown ){
-                    alert('status: ' + textStatus + '\nerror: ' + jqXHR.error )
-                },
-                success: function(datas){
-                    getMarker(datas);
-                }
-            });
-
+        $(".btn_search").click(function(){
+            getAddr();
         });
+
+        $(".btn_toggle_content").click(function(){
+            $(".top_layer_info").hide();
+        })
+        
+        $(".filter_news").click(function(){
+            $(".top_layer_info").show();
+        })
 
     });
 

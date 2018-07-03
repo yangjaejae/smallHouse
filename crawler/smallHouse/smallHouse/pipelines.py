@@ -28,7 +28,7 @@ class EstateDealPipeline(object):
 class EstateNewsPipeline(object):
 
     def open_spider(self, spider):
-        self.connection = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'" % (SPIDER_PSQL_DB['host'], SPIDER_PSQL_DB['dbname'], SPIDER_PSQL_DB['user'], SPIDER_PSQL_DB['password']))
+        self.connection = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s' port='%s'" % (SPIDER_PSQL_DB['host'], SPIDER_PSQL_DB['dbname'], SPIDER_PSQL_DB['user'], SPIDER_PSQL_DB['password'], SPIDER_PSQL_DB['port']))
         self.cur = self.connection.cursor()
 
     def close_spider(self, spider):
