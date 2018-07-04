@@ -7,7 +7,7 @@
         <div class="top_layer_nav">
             <div class="input-group-lg top_layer_search">
                 <input type="text" class="top_layer_keyword" onkeypress="if( event.keyCode==13 ){goSearch();}" placeholder="검색어를 입력하세요(ex.서초동)"/>
-                <button class="btn btn-lg btn-default btn_search"></button>
+                <span class="btn btn-lg btn-default btn_search glyphicon glyphicon-search"></span>
             </div>
             <div class="sub-filter">
                 <div class="sub-filter-layer">
@@ -48,7 +48,7 @@
         <div class="top_layer_nav">
             <div class="input-group-lg top_layer_search">
                 <input type="text" class="top_layer_keyword" onkeypress="if( event.keyCode==13 ){goSearch();}" placeholder="검색어를 입력하세요(ex.서초동)"/>
-                <button class="btn btn-lg btn-default btn_search"></button>
+                <span class="btn btn-lg btn-default btn_search glyphicon glyphicon-search"></span>
             </div>
             <div class="sub-filter">
                 <div class="sub-filter-layer">
@@ -59,7 +59,7 @@
         </div>
         <div class="header_info">
             <div class="house_title">
-                <span><a type="button" class="btn btn-default btn_back" style="float:left;"/></a></span>
+                <span class="btn btn-lg btn-default btn_back glyphicon glyphicon-chevron-left" style=""></span>
                 <span><a href="#"><h4>하동 광교호수마을참누리 LAKE</h4></a></span>
             </div>
             <div class="text-center address_info">
@@ -205,6 +205,11 @@
         $(".filter_news").click(function(){
             $(".top_layer_info").show();
         })
+
+        $(".btn_back").click(function(){
+            $(".wrap_info_house").hide();
+            $(".top_layer").show();
+        });
 
     });
 
