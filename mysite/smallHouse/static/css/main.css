@@ -8,7 +8,7 @@ legend { display: none; }
 label { display: none; }
 ul { list-style: none; margin: 0; padding: 0; }
 li { float: left; }
-.btn-lg { padding: 0px 10px; border: 0px; }
+.btn-lg { padding: 7px 10px; border: 0px; }
 
 .top_layer_keyword { position: absolute; border: 0px; width: 85%; height: 50%; background-color: #fff; }
 .btn_search { float: right; background-repeat: no-repeat; }
@@ -16,12 +16,12 @@ li { float: left; }
 
 /* main initial */
 /* .top_layer { position: absolute; margin-top: 10px; margin-left: 10px; width: 400; height: 500; z-index: 1000; padding-left: -15; padding-right: -15; } */
-.top_layer { margin-top: 10px; margin-left: 10px; width: 400; height: 500; z-index: 1000; }
-.top_layer_nav { position: relative; height: 60px; box-shadow: 1px 1px grey; background-color: #fff; z-index: 1000; }
-.sub-filter { position: absolute; margin-top: 20px; overflow: hidden; }
-.sub-filter .sub-filter-layer .menu-container ul { padding-left: 8px; height: 62px; overflow: hidden;}
-.sub-filter .sub-filter-layer .menu-container ul li { display: inline;  margin: 1em;}
-.top_layer_info { position: absolute; margin-top: 68px; height: 280px; padding-right: 0px; padding-left: 0px; box-shadow: 1px 1px grey; background-color: #fff; z-index: 1000; }
+.top_layer { width: 400; height: 500; z-index: 1000; }
+.top_layer_nav { position: relative; height: 80px; box-shadow: 1px 1px grey; background-color: #fff; z-index: 5000; }
+.sub_filter { padding-top: 38; }
+/* .sub_filter .sub_filter_layer .menu-container ul { padding-left: 8px; height: 62px; overflow: hidden;}
+.sub_filter .sub_filter_layer .menu-container ul li { display: inline;  margin: 1em;} */
+.top_layer_info { position: absolute; margin-top: 90px; height: 300px; padding-right: 0px; padding-left: 0px; box-shadow: 1px 1px grey; background-color: #fff; z-index: 1000; }
 .top_layer_info .info_nav { width: 100%; height: 15%; background-color: #fff; }
 .top_layer_info .info_nav .info_nav_text { float: left;}
 .top_layer_info .info_nav ul li { display: inline; }
@@ -36,3 +36,14 @@ li { float: left; }
 .header_info .house_title { top:0; left:0; width:100%; text-align:center }
 .header_info .house_title ul li { display:inline-block; vertical-align:middle }
 .realprice_avg ul { list-style: initial }
+
+/* left filter */
+.left_filter { position: relative; margin-top: 10px; }
+.left_filter > div { z-index: 2000; padding: 10px; }
+.left_filter > div > button { background-color: white; }
+
+/* right filter */
+.right_filter { position: relative; margin-top: -160px; float: right;}
+.right_filter > div { z-index: 2000; padding: 10px; }
+.right_filter > div > button { background-color: white; }
+
