@@ -2,7 +2,7 @@
 {% load staticfiles %}
 
 {% block content %}
-<div id="map" class="map" style="height:800px; width: 100%;">
+<div id="map" class="map" style="height:1000px; width: 100%;">
     <div class="container-fluid top_layer" style="padding-right: 0px; padding-left: 0px;">
         <div class="col-md-4 top_layer_nav">
             <div class="input-group-lg top_layer_search">
@@ -124,34 +124,39 @@
             </table>
         </div>
     </div>
-    <div class="visible-xs visible-sm left_filter">
+    <!-- side button -->
+    <div class="visible-xs visible-sm left_button">
         <div class="col-md-1">
-            <button class="btn btn-default glyphicon glyphicon-list-alt"></button>
+            <button class="btn btn-default btn_left_news glyphicon glyphicon-list-alt"></button>
         </div>
         <div class="col-md-1">
-            <button class="btn btn-default glyphicon glyphicon-road"></button>
+            <button class="btn btn-default btn_left_near glyphicon glyphicon-road"></button>
         </div>
         <div class="col-md-1">
-            <button class="btn btn-default glyphicon glyphicon-user"></button>
+            <button class="btn btn-default btn_left_poppul glyphicon glyphicon-user"></button>
         </div>
     </div>
-    <div class="visible-xs visible-sm right_filter">
+    <div class="visible-xs visible-sm right_button">
         <div class="col-md-1">
-            <button class="btn btn-default glyphicon glyphicon-screenshot"></button>
+            <button class="btn btn-default btn_right_loc glyphicon glyphicon-screenshot"></button>
         </div>
         <div class="col-md-1">
-            <button class="btn btn-default glyphicon glyphicon-globe"></button>
+            <button class="btn btn-default btn_right_map glyphicon glyphicon-globe"></button>
         </div>
         <div class="col-md-1">
-            <button class="btn btn-default glyphicon glyphicon-resize-horizontal"></button>
+            <button class="btn btn-default btn_right_dist glyphicon glyphicon-resize-horizontal"></button>
         </div>
         <div class="col-md-1">
-            <button class="btn btn-default glyphicon glyphicon-map-marker"></button>
+            <button class="btn btn-default btn_right_hide glyphicon glyphicon-map-marker"></button>
         </div>
     </div>
 </div>
 <script>
-    var marker = null;
+    var map = null;
+    
+    //marker cluster용 배열
+    var markers = []
+    
     var mapOptions = {
         center: new naver.maps.LatLng(37.498189, 127.027642),
         zoom: 10,
@@ -162,10 +167,12 @@
             position: naver.maps.Position.TOP_RIGHT
         }
     };
-    var map = new naver.maps.Map('map', mapOptions);
-    
+    map = new naver.maps.Map('map', mapOptions);
+
     function getMarker(listMap){
-        
+        //맵 초기화
+        map = new naver.maps.Map('map', mapOptions);
+
         var dataList = listMap.result
         for( var i=0; i < dataList.length; i++ ){
             var addr = dataList[i].location + dataList[i].loc_num;
@@ -183,6 +190,12 @@
                     position: new naver.maps.LatLng(lat, lng),
                     map: map
                 });
+                
+                //marker cluster
+                markers.push(marker);
+
+                //검색한 위치로 이동
+                map.setCenter(marker.position);
 
                 naver.maps.Event.addListener(marker, "click", function(e) {
                     
@@ -193,6 +206,7 @@
 
             });
         }
+
     }
 
     function getAddr(){
@@ -237,7 +251,29 @@
             $(".top_layer").show();
         });
 
+        $(".btn_right_dist").click(function(){
+            getPathLine();
+        });
+
+        $(".btn_right_hide").click(function(){
+            mapOptions = {
+                center: new naver.maps.LatLng(37.498189, 127.027642),
+                zoom: 10,
+                minZoom: 1, //지도의 최소 줌 레벨
+                zoomControl: true, //줌 컨트롤의 표시 여부
+                zoomControlOptions: {
+                    style: naver.maps.ZoomControlStyle.SMALL,
+                    position: naver.maps.Position.TOP_RIGHT
+                }
+            }
+
+            map = new naver.maps.Map('map', mapOptions);    
+        });
+
     });
 
 </script>
+<script type="text/javascript" src="{% static 'js/marker_clustering.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/polyline.js' %}"></script>
+
 {% endblock %}
