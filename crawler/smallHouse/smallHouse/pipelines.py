@@ -9,6 +9,22 @@ class EstateDealPipeline(object):
     def open_spider(self, spider):
         self.connection = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s' port='%s'" % (SPIDER_PSQL_DB['host'], SPIDER_PSQL_DB['dbname'], SPIDER_PSQL_DB['user'], SPIDER_PSQL_DB['password'], SPIDER_PSQL_DB['port']))
         self.cur = self.connection.cursor()
+        self.cur.execute(
+            '''
+            CREATE TABLE IF NOT EXISTS small_house_realestate(
+                id SERIAL PRIMARY KEY,
+                es_name char(100),
+                price char(20),
+                fnd_year char(20),
+                sold_date char(20),
+                location char(20),
+                loc_num char(20),
+                loc_cd char(20),
+                floor char(20)
+            )
+            '''
+        )
+        self.connection.commit()
 
     def close_spider(self, spider):
         self.cur.close()
@@ -30,6 +46,17 @@ class EstateNewsPipeline(object):
     def open_spider(self, spider):
         self.connection = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s' port='%s'" % (SPIDER_PSQL_DB['host'], SPIDER_PSQL_DB['dbname'], SPIDER_PSQL_DB['user'], SPIDER_PSQL_DB['password'], SPIDER_PSQL_DB['port']))
         self.cur = self.connection.cursor()
+        self.cur.execute(
+            '''
+            CREATE TABLE IF NOT EXISTS small_house_realNews(
+                id SERIAL PRIMARY KEY,
+                title char(100),
+                newspaper char(20),
+                url char(100)
+            )
+            '''
+        )
+        self.connection.commit()
 
     def close_spider(self, spider):
         self.cur.close()
