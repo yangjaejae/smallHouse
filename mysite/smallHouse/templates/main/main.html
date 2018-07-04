@@ -4,7 +4,7 @@
 {% block content %}
 <div id="map" class="map" style="height:800px; width: 100%;">
     <div class="top_layer">
-        <div class="top_layer_nav">
+        <div class="col-md-3 top_layer_nav">
             <div class="input-group-lg top_layer_search">
                 <input type="text" class="top_layer_keyword" onkeypress="if( event.keyCode==13 ){goSearch();}" placeholder="검색어를 입력하세요(ex.서초동)"/>
                 <span class="btn btn-lg btn-default btn_search glyphicon glyphicon-search"></span>
@@ -22,7 +22,7 @@
                 </div>
             </div>
         </div>
-        <div class="top_layer_info" style="overflow: scroll;">
+        <div class="visible-md visible-lg top_layer_info" style="overflow: scroll;">
             <div class="info_nav" style="background-color: cornflowerblue; color:white; text-align:center;">
                 <span><h3>뉴스</h3></span>
                 <span class="btn_toggle_content" style="color:white;">접기<span class="caret"></span></span>
