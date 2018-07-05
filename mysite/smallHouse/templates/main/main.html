@@ -2,7 +2,7 @@
 {% load staticfiles %}
 
 {% block content %}
-<div id="map" class="map" style="height:1000px; width: 100%;">
+<div id="map" class="map" style="height:800px; width: 100%;">
     <div class="container-fluid top_layer" style="padding-right: 0px; padding-left: 0px;">
         <div class="col-md-4 top_layer_nav">
             <div class="input-group-lg top_layer_search">
@@ -136,7 +136,7 @@
             <button class="btn btn-default btn_left_poppul glyphicon glyphicon-user"></button>
         </div>
     </div>
-    <div class="visible-xs visible-sm right_button">
+    <div class="right_button">
         <div class="col-md-1">
             <button class="btn btn-default btn_right_loc glyphicon glyphicon-screenshot"></button>
         </div>
@@ -150,9 +150,16 @@
             <button class="btn btn-default btn_right_hide glyphicon glyphicon-map-marker"></button>
         </div>
     </div>
+    <div class="bottom_current_loc_info">
+        <span class="btn btn-default btn_loc_info"></span>
+    </div>
 </div>
 <script>
+    //map initiate
     var map = null;
+
+    //info window
+    var infowindow = new naver.maps.InfoWindow();
     
     //marker cluster용 배열
     var markers = []
@@ -164,7 +171,7 @@
         zoomControl: true, //줌 컨트롤의 표시 여부
         zoomControlOptions: {
             style: naver.maps.ZoomControlStyle.SMALL,
-            position: naver.maps.Position.TOP_RIGHT
+            position: naver.maps.Position.RIGHT_CENTER
         }
     };
     map = new naver.maps.Map('map', mapOptions);
@@ -231,7 +238,28 @@
     function goSearch(){
         getAddr();
     }
-    
+
+
+    function onSuccessGeolocation(position) {
+        var location = new naver.maps.LatLng(position.coords.latitude,
+                                             position.coords.longitude);
+        map.setCenter(location); // 얻은 좌표를 지도의 중심으로 설정합니다.
+        map.setZoom(10); // 지도의 줌 레벨을 변경합니다.
+
+        marker = new naver.maps.Marker({
+            position: location,
+            map: map
+        });
+
+    }
+    function onErrorGeolocation() {
+        alert("error");
+        var center = map.getCenter();
+        infowindow.setContent('<div style="padding:20px;">' +
+            '<h5 style="margin-bottom:5px;color:#f00;">Geolocation failed!</h5>'+ "latitude: "+ center.lat() +"<br />longitude: "+ center.lng() +'</div>');
+        infowindow.open(map, center);
+    }
+
     $(document).ready(function(){
         
         $(".btn_search").click(function(){
@@ -256,8 +284,10 @@
         });
 
         $(".btn_right_hide").click(function(){
+            var center = map.getCenter();
+
             mapOptions = {
-                center: new naver.maps.LatLng(37.498189, 127.027642),
+                center: new naver.maps.LatLng(center.lat(), center.lng()),
                 zoom: 10,
                 minZoom: 1, //지도의 최소 줌 레벨
                 zoomControl: true, //줌 컨트롤의 표시 여부
@@ -268,6 +298,32 @@
             }
 
             map = new naver.maps.Map('map', mapOptions);    
+        });
+
+        $(".btn_right_loc").click(function(){
+            
+            navigator.geolocation.getCurrentPosition(onSuccessGeolocation, onErrorGeolocation);
+            
+        });
+        
+        //현재 위치 체크
+        naver.maps.Event.addListener(map, 'bounds_changed', function(bounds) {
+            var center = map.getCenter();
+            naver.maps.Service.reverseGeocode({
+                location: new naver.maps.LatLng(center.lat(), center.lng()),
+            }, function(status, response) {
+                if (status !== naver.maps.Service.Status.OK) {
+                    return alert('Something wrong!');
+                }
+        
+                var result = response.result, // 검색 결과의 컨테이너
+                    items = result.items; // 검색 결과의 배열
+                
+                var dong = items[0].addrdetail.dongmyun;
+
+                $(".btn_loc_info").text(dong);
+            });
+
         });
 
     });
