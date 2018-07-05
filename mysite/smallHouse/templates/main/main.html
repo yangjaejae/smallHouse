@@ -9,16 +9,16 @@
                 <input type="text" class="top_layer_keyword" onkeypress="if( event.keyCode==13 ){goSearch();}" placeholder="검색어를 입력하세요(ex.서초동)"/>
                 <span class="btn btn-lg btn-default btn_search glyphicon glyphicon-search"></span>
             </div>
-            <div class="sub_filter" style="padding-top: 38px;">
-                <ul class="nav nav-pills">
-                    <li class="col-md-6 dropdown">
+            <div class="sub_filter dropdown" style="padding-top: 38px;">
+                <ul class="nav nav-tabs">
+                    <li class="col-md-6">
                         <a data-toggle="dropdown" href="#">매매/전세</a>
                         <ul class="dropdown-menu" role="menu">
                             <li role="presentation"><a role="menuitem" tabindex="-1" href="#">매매</a></li>
                             <li role="presentation"><a role="menuitem" tabindex="-1" href="#">전세</a></li>
                         </ul>
                     </li>
-                    <li class="col-md-6 dropdown">
+                    <li class="col-md-6">
                         <a data-toggle="dropdown" href="#">주택</a>
                         <ul class="dropdown-menu" role="menu">
                             <li role="presentation"><a role="menuitem" tabindex="-1" href="#">다세대 연립</a></li>
@@ -28,6 +28,7 @@
                 </ul>
             </div>
         </div>
+        <!--<div class="col-md-4 top_layer_info" style="overflow: scroll;">-->
         <div class="visible-md visible-lg col-md-4 top_layer_info" style="overflow: scroll;">
             <div class="info_nav" style="background-color: cornflowerblue; color:white; text-align:center;">
                 <span><h3>뉴스</h3></span>
@@ -75,14 +76,14 @@
         </div>
         <div class="type_select">
             <ul class="nav nav-pills">
-                <li class="col-md-6 dropdown">
+                <li class="col-md-6 active">
                     <a data-toggle="dropdown" href="#">매매/전세</a>
                     <ul class="dropdown-menu" role="menu">
                         <li role="presentation"><a role="menuitem" tabindex="-1" href="#">매매</a></li>
                         <li role="presentation"><a role="menuitem" tabindex="-1" href="#">전세</a></li>
                     </ul>
                 </li>
-                <li class="col-md-6 dropdown">
+                <li class="col-md-6 active">
                     <a data-toggle="dropdown" href="#">주택</a>
                     <ul class="dropdown-menu" role="menu">
                         <li role="presentation"><a role="menuitem" tabindex="-1" href="#">다세대 연립</a></li>
@@ -162,6 +163,7 @@
             <span class="btn_loc_info"></span>
         </div>
     </div>
+    <div class="glyphicon glyphicon-chevron-left btn_left_news_back"></div>
 </div>
 <script>
     //map initiate
@@ -180,7 +182,7 @@
         zoomControl: true, //줌 컨트롤의 표시 여부
         zoomControlOptions: {
             style: naver.maps.ZoomControlStyle.SMALL,
-            position: naver.maps.Position.RIGHT_CENTER
+            position: naver.maps.Position.RIGHT_BOTTOM
         }
     };
     map = new naver.maps.Map('map', mapOptions);
@@ -308,33 +310,42 @@
             $(".top_layer").show();
         });
 
-        $(".btn_right_dist").click(function(){
-            getPathLine();
+        ////왼쪽 버튼
+        //뉴스보기
+        $(".btn_left_news").click(function(){
+            $(".top_layer_info").removeClass('visible-md');
+            $(".top_layer_info").removeClass('visible-lg');
+            $(".top_layer_info").css('position','relative');
+            $(".top_layer_info").css('margin-top','1px');
+            $(".top_layer_info").css('height','100%');
+            $(".top_layer_info").css('z-index','3000');
+            $(".btn_left_news_back").css('position','absolute');
+            $(".btn_left_news_back").css('z-index','4000');
+            $(".btn_left_news_back").css('top','12%');
+            $(".btn_left_news_back").css('left','3%');
         });
 
-        $(".btn_right_hide").click(function(){
-            var center = map.getCenter();
+        $(".btn_left_news_back").click(function(){
+            location.reload();
+        });
+        
+        //지도 내의 정보 검색
+        $(".btn_left_near").click(function(){
 
-            mapOptions = {
-                center: new naver.maps.LatLng(center.lat(), center.lng()),
-                zoom: 10,
-                minZoom: 1, //지도의 최소 줌 레벨
-                zoomControl: true, //줌 컨트롤의 표시 여부
-                zoomControlOptions: {
-                    style: naver.maps.ZoomControlStyle.SMALL,
-                    position: naver.maps.Position.TOP_RIGHT
-                }
-            }
-
-            map = new naver.maps.Map('map', mapOptions);    
         });
 
+        //지도 내의 인구 표시
+        $(".btn_left_poppul").click(function(){
+
+        });
+        
+        ////오른쪽 버튼
+        //현재 위치로 이동
         $(".btn_right_loc").click(function(){
-            
             navigator.geolocation.getCurrentPosition(onSuccessGeolocation, onErrorGeolocation);
-            
         });
 
+        //지도 형태 변경
         $(".btn_glob_0").click(function(){
             if($(".btn_glob_1").css('opacity') == '1'){
                 $(".btn_glob_1").css('opacity', '0');
@@ -345,7 +356,30 @@
             }
         });
 
-        //현재 위치 체크
+        //지도상 거리 표현
+        $(".btn_right_dist").click(function(){
+            getPathLine();
+        });
+
+        //마커 숨기기
+        $(".btn_right_hide").click(function(){
+            var center = map.getCenter();
+
+            mapOptions = {
+                center: new naver.maps.LatLng(center.lat(), center.lng()),
+                zoom: 10,
+                minZoom: 1, //지도의 최소 줌 레벨
+                zoomControl: true, //줌 컨트롤의 표시 여부
+                zoomControlOptions: {
+                    style: naver.maps.ZoomControlStyle.SMALL,
+                    position: naver.maps.Position.RIGHT_BOTTOM
+                }
+            }
+
+            map = new naver.maps.Map('map', mapOptions);    
+        });
+
+        //현재 위치 체크 initiate
         getCenterAddr()
 
         //현재 위치 체크

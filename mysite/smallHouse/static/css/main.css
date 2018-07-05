@@ -13,6 +13,7 @@ li { float: left; }
 .top_layer_keyword { position: absolute; border: 0px; width: 85%; height: 50%; background-color: #fff; }
 .btn_search { float: right; background-repeat: no-repeat; }
 .btn_back { float: left; }
+.btn_left_news_back { position: absolute; }
 
 /* main initial */
 /* .top_layer { position: absolute; margin-top: 10px; margin-left: 10px; width: 400; height: 500; z-index: 1000; padding-left: -15; padding-right: -15; } */
