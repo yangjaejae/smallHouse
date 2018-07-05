@@ -46,5 +46,5 @@ li { float: left; }
 .right_button > div { z-index: 2000; padding: 10px; }
 
 /* bottom location info */
-.bottom_current_loc_info { position: absolute; left: 40%; top:85%; background-color: white; z-index: 2000; }
+.bottom_current_loc_info { position: absolute; left: 40%; top:70%; background-color: white; z-index: 2000; }
 
