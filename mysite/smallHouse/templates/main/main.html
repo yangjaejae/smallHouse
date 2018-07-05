@@ -151,7 +151,10 @@
         </div>
     </div>
     <div class="bottom_current_loc_info">
-        <span class="btn btn-default btn_loc_info"></span>
+        <div class="btn btn-info ">
+            <span class="glyphicon glyphicon-map-marker"></span>
+            <span class="btn_loc_info"></span>
+        </div>
     </div>
 </div>
 <script>
@@ -260,6 +263,26 @@
         infowindow.open(map, center);
     }
 
+    function getCenterAddr(){
+        var center = map.getCenter();
+        naver.maps.Service.reverseGeocode({
+            location: new naver.maps.LatLng(center.lat(), center.lng()),
+        }, function(status, response) {
+            if (status !== naver.maps.Service.Status.OK) {
+                return alert('Something wrong!');
+            }
+    
+            var result = response.result, // 검색 결과의 컨테이너
+                items = result.items; // 검색 결과의 배열
+            
+            var sido = items[0].addrdetail.sido;
+            var sigun = items[0].addrdetail.sigugun;
+            var dong = items[0].addrdetail.dongmyun;
+
+            $(".btn_loc_info").text(sido + " " + sigun + " " + dong);
+        });
+    }
+
     $(document).ready(function(){
         
         $(".btn_search").click(function(){
@@ -305,25 +328,13 @@
             navigator.geolocation.getCurrentPosition(onSuccessGeolocation, onErrorGeolocation);
             
         });
-        
+
+        //현재 위치 체크
+        getCenterAddr()
+
         //현재 위치 체크
         naver.maps.Event.addListener(map, 'bounds_changed', function(bounds) {
-            var center = map.getCenter();
-            naver.maps.Service.reverseGeocode({
-                location: new naver.maps.LatLng(center.lat(), center.lng()),
-            }, function(status, response) {
-                if (status !== naver.maps.Service.Status.OK) {
-                    return alert('Something wrong!');
-                }
-        
-                var result = response.result, // 검색 결과의 컨테이너
-                    items = result.items; // 검색 결과의 배열
-                
-                var dong = items[0].addrdetail.dongmyun;
-
-                $(".btn_loc_info").text(dong);
-            });
-
+            getCenterAddr()
         });
 
     });
