@@ -50,8 +50,9 @@
         </div>
         <div class="visible-md visible-lg col-md-4 top_layer_info" style="overflow: scroll;">
             <div class="info_nav" style="background-color: cornflowerblue; color:white; text-align:center;">
-                <span><h3>뉴스</h3></span>
-                <span class="visible-md visible-lg btn_toggle_content" style="color:white;">접기<span class="caret"></span></span>
+                <div class="visible-xs visible-sm glyphicon glyphicon-chevron-left btn_left_news_back"></div>
+                <span><h3>부동산 뉴스</h3></span>
+                <a href="#" class="visible-md visible-lg btn_toggle_content" style="color:white;">접기<span class="caret"></span></a>
             </div>
             <div class="info_nav_text">
                 <table>
@@ -182,7 +183,7 @@
             <span class="btn_loc_info"></span>
         </div>
     </div>
-    <div class="glyphicon glyphicon-chevron-left btn_left_news_back"></div>
+    
 </div>
 <script>
     //map initiate
@@ -225,7 +226,23 @@
                 var lat = items[0].point.y;
                 marker = new naver.maps.Marker({
                     position: new naver.maps.LatLng(lat, lng),
-                    map: map
+                    map: map,
+                    icon: {
+                        content: [
+                                    '<div class="cs_mapbridge">',
+                                        '<div class="map_group _map_group">',
+                                            '<div class="map_marker _marker">',
+                                                '<div class="ico _icon" style=" position: absolute; z-index: 6000; background-image: url(' + '{% static "img/marker_each_green_48*48.png" %}' + '); width: 47px; height: 48px; background-position: -192px -48px;">',
+                                                    '<div>' + '<h6>참누리</h6>' + '</div>',
+                                                    '<div><h6>' + '2.4' + '원</h6></div>',
+                                                '</div>',
+                                            '</div>',
+                                        '</div>',
+                                    '</div>'
+                                ].join(''),
+                        size: new naver.maps.Size(38, 58),
+                        anchor: new naver.maps.Point(19, 58),
+                    }
                 });
                 
                 //marker cluster
