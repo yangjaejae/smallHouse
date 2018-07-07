@@ -87,11 +87,11 @@
         <div class="header_info">
             <div class="house_title">
                 <span class="btn btn-lg btn-default btn_back glyphicon glyphicon-chevron-left" style=""></span>
-                <span><a href="#"><h4>하동 광교호수마을참누리 LAKE</h4></a></span>
+                <span><a href="#"><h4 id="detail_name">주택명</h4></a></span>
             </div>
             <div class="text-center address_info">
-                <p> 경기도 수원시 영통구 하동 994 </p>
-                <p> 건축년도 : 2011 </p>
+                <p id="detail_addr"></p>
+                <p id="detail_addr_detail"></p>
             </div>
         </div>
         <div class="type_select">
@@ -114,7 +114,7 @@
         </div>
         <div class="text-center realprice_avg" style="position: relative">
             <div>최근 3개월 실거래 평균</div>
-            <div>7억 7,600</div>
+            <div id="detail_price_avg">없음</div>
             <div><blockquote class="pull-right"><a href="#"><h6>국토교통부 거래가격</h6></a></blockquote></div>
         </div>
         <hr/>
@@ -195,6 +195,8 @@
     //marker cluster용 배열
     var markers = []
     
+    var dataList = []
+
     var mapOptions = {
         center: new naver.maps.LatLng(37.498189, 127.027642),
         zoom: 10,
@@ -211,56 +213,106 @@
         //맵 초기화
         map = new naver.maps.Map('map', mapOptions);
 
-        var dataList = listMap.result
+        dataList = listMap.result
+        var resAddrdetail = "";
+        var index = 0;
         for( var i=0; i < dataList.length; i++ ){
             var addr = dataList[i].location + dataList[i].loc_num;
+            bldgName = dataList[i].name;
+            bldgPrice = dataList[i].price;
             naver.maps.Service.geocode({
-                address: addr
+                address: addr,
             }, function(status, response) {
                 if (status !== naver.maps.Service.Status.OK) {
                 }
                 var result = response.result, // 검색 결과의 컨테이너
                 items = result.items; // 검색 결과의 배열
-                
                 var lng = items[0].point.x;
                 var lat = items[0].point.y;
+                resAddrdetail = items[0].addrdetail.sido + "-" + items[0].addrdetail.sigugun + "-" + items[0].addrdetail.dongmyun + "-" +  items[0].addrdetail.rest
+                var houses = dataList[index]; 
+
                 marker = new naver.maps.Marker({
                     position: new naver.maps.LatLng(lat, lng),
                     map: map,
                     icon: {
                         content: [
-                                    '<div class="cs_mapbridge">',
-                                        '<div class="map_group _map_group">',
-                                            '<div class="map_marker _marker">',
-                                                '<div class="ico _icon" style=" position: absolute; z-index: 6000; background-image: url(' + '{% static "img/marker_each_green_48*48.png" %}' + '); width: 47px; height: 48px; background-position: -192px -48px;">',
-                                                    '<div>' + '<h6>참누리</h6>' + '</div>',
-                                                    '<div><h6>' + '2.4' + '원</h6></div>',
-                                                '</div>',
-                                            '</div>',
+                            '<div class="cs_mapbridge">',
+                                '<div class="map_group _map_group">',
+                                    '<div class="map_marker _marker">',
+                                        '<div class="ico _icon" style=" position: absolute; z-index: 6000; background-image: url(' + '{% static "img/marker_each_green_64*64.png" %}' + '); width: 66px; height: 64px; background-position: -192px -64px;">',
+                                            '<div><h6>' + '23' + '평</h6></div>',
+                                            '<div><h6>' + houses.price + '만원</h6></div>',
+                                            '<div style="display: none"><h6>' + houses.name + '</h6></div>',
+                                            '<div style="display: none"><h6>' + houses.fnd_year + '</h6></div>',
+                                            '<div style="display: none"><h6>' + houses.sold_date + '</h6></div>',
+                                            '<div style="display: none"><h6>' + houses.location + '</h6></div>',
+                                            '<div style="display: none"><h6>' + houses.loc_num + '</h6></div>',
+                                            '<div style="display: none"><h6>' + houses.loc_cd + '</h6></div>',
+                                            '<div style="display: none"><h6>' + houses.floor + '</h6></div>',
+                                            '<div style="display: none"><h6>' + resAddrdetail + '</h6></div>',
                                         '</div>',
-                                    '</div>'
-                                ].join(''),
+                                    '</div>',
+                                '</div>',
+                            '</div>'
+                        ].join(''),
                         size: new naver.maps.Size(38, 58),
                         anchor: new naver.maps.Point(19, 58),
                     }
                 });
+                index += 1;
                 
                 //marker cluster
                 markers.push(marker);
-
+                
                 //검색한 위치로 이동
                 map.setCenter(marker.position);
-
+                
                 naver.maps.Event.addListener(marker, "click", function(e) {
+                    var content = []
+                    content = e.overlay.icon.content.replace(/(<([^>]+)>)/ig," ").split(/(\s+)/);
                     
+                    var name = content[6];
+                    var price = content[4];
+                    var fnd_year = content[8];
+                    var addr1 = content[12] + content[14] + "(" + content[18] + "층)" ;
+                    var addr2 = content[20];
+
                     $(".top_layer").hide();
+                    $("#detail_name").text(name);
+                    $("#detail_addr").text(addr1);
+                    $("#detail_addr_detail").text(addr2);
+                    $("#detail_price_avg").text(price);
                     $(".wrap_info_house").show();
                 
                 });
-
+                        
+                var contentString = [
+                '<div class="iw_inner">',
+                    '   <h3>서울특별시청</h3>',
+                    '   <p>서울특별시 중구 태평로1가 31 | 서울특별시 중구 세종대로 110 서울특별시청<br />',
+                        '       <img src="'+ HOME_PATH +'/img/example/hi-seoul.jpg" width="55" height="55" alt="서울시청" class="thumb" /><br />',
+                        '       02-120 | 공공,사회기관 &gt; 특별,광역시청<br />',
+                        '       <a href="http://www.seoul.go.kr" target="_blank">www.seoul.go.kr/</a>',
+                        '   </p>',
+                        '</div>'
+                        ].join('');
+                        
+                        alert(contentString)
+                        var infowindow = new naver.maps.InfoWindow({
+                            content: contentString
+                        });
+                        
+                        naver.maps.Event.addListener(marker, "mouseover", function(e) {
+                            infowindow.open(map, marker);
+                        });
+                        
+                //infowindow.open(map, marker);
             });
         }
-
+        
+        getCenterAddr()
+        
     }
 
     function getAddr(){
@@ -464,7 +516,7 @@
         naver.maps.Event.addListener(map, 'bounds_changed', function(bounds) {
             getCenterAddr()
         });
-
+        
     });
 
 </script>
