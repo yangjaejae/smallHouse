@@ -4,57 +4,39 @@
 {% block content %}
 <div id="map" class="map" style="position:absolute; height:100%; width: 100%;">
     <div class="container-fluid top_layer" style="padding-right: 0px; padding-left: 0px;">
-        <div class="col-md-4 top_layer_nav">
+        <div class="col-md-3 top_layer_nav">
             <div class="input-group-lg top_layer_search">
-                <input type="text" class="top_layer_keyword" onkeypress="if( event.keyCode==13 ){goSearch();}" placeholder="검색어를 입력하세요(ex.서초동)"/>
+                <input type="text" class="top_layer_keyword" onkeypress="if( event.keyCode==13 ){goSearch();}" placeholder="동이름을 입력하세요(ex.서초동)"/>
                 <span class="btn btn-lg btn-default btn_search glyphicon glyphicon-search"></span>
             </div>
-            <div class="dropdown" style="position: relative; top: 54%;">
-                <button class="btn btn-default dropdown-toggle" id="menu1" type="button" data-toggle="dropdown">주택
-                <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">다세대 연립</a></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">전세</a></li>
-                </ul>
-                <button class="btn btn-default dropdown-toggle" id="menu1" type="button" data-toggle="dropdown">매매/전세
-                <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">매매</a></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">단독 다가구</a></li>
-                </ul>
-            </div>
-            {% comment %} <div class="dropdown" style="position: relative; top: 54%;">
-                <a data-toggle="dropdown" href="#">매매/전세</a>
-                <ul class="nav nav-tabs dropdown-menu" role="menu">
-                    <li role="presentation">
-                        <a role="menuitem" tabindex="-1" href="#">메뉴1</a></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">메뉴1</a></li>
-                </ul>
-            </div> {% endcomment %}
-            {% comment %} <div class="sub_filter dropdown" style="padding-top: 38px;">
-                <ul class="nav nav-tabs">
-                    <li class="col-md-6">
-                        <a data-toggle="dropdown" href="#">매매/전세</a>
+            <nav class="navbar top_layer_filter" style="position: relative; top: 54%;">
+                <div class="" id="">
+                    <ul class="">
+                        <li class="dropdown">
+                        <button href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown" role="button">주택</span></button>
                         <ul class="dropdown-menu" role="menu">
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">매매</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">전세</a></li>
+                            <li><a href="#">다세대 연립</a></li>
+                            <li><a href="#">단독/다가구</a></li>
                         </ul>
-                    </li>
-                    <li class="col-md-6">
-                        <a data-toggle="dropdown" href="#">주택</a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">다세대 연립</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">단독 다가구</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div> {% endcomment %}
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown" role="button">전세/매매</span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="#">전세</a></li>
+                                <li><a href="#">매매</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
         </div>
-        <div class="visible-md visible-lg col-md-4 top_layer_info" style="overflow: scroll;">
+        <div class="visible-md visible-lg col-md-3 top_layer_info">
             <div class="info_nav" style="background-color: cornflowerblue; color:white; text-align:center;">
                 <div class="visible-xs visible-sm glyphicon glyphicon-chevron-left btn_left_news_back"></div>
                 <span><h3>부동산 뉴스</h3></span>
                 <a href="#" class="visible-md visible-lg btn_toggle_content" style="color:white;">접기<span class="caret"></span></a>
             </div>
-            <div class="info_nav_text">
+            <div class="info_news">
                 <table>
                     {% for new in news %}
                     <tr>
@@ -94,24 +76,19 @@
                 <p id="detail_addr_detail"></p>
             </div>
         </div>
-        <div class="type_select">
-            <ul class="nav nav-pills">
-                <li class="col-md-6 active">
-                    <a data-toggle="dropdown" href="#">매매/전세</a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">매매</a></li>
-                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">전세</a></li>
-                    </ul>
-                </li>
-                <li class="col-md-6 active">
-                    <a data-toggle="dropdown" href="#">주택</a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">다세대 연립</a></li>
-                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">단독 다가구</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
+        <nav class="navbar type_select">
+            <div class="" id="">
+                <ul class="">
+                    <li class="dropdown">
+                        <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown" role="button">전세/매매</span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#">전세</a></li>
+                            <li><a href="#">매매</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
         <div class="text-center realprice_avg" style="position: relative">
             <div>최근 3개월 실거래 평균</div>
             <div id="detail_price_avg">없음</div>
@@ -148,33 +125,37 @@
         </div>
     </div>
     <!-- side button -->
-    <div class="visible-xs visible-sm left_button">
-        <div class="col-md-1">
-            <button class="btn btn-default btn_left_news glyphicon glyphicon-list-alt"></button>
+    <div class="left_button">
+        <div class="visible-xs visible-sm col-md-1">
+            <button class="btn btn-default btn_left_news glyphicon glyphicon-list-alt" data-toggle="tooltip" data-placement="left" title="부동산 뉴스를 확인합니다."></button>
         </div>
-        <div class="col-md-1">
-            <button class="btn btn-default btn_left_near glyphicon glyphicon-road"></button>
+        <div class="visible-xs visible-sm col-md-1">
+            <a><button class="btn btn-default btn_left_near glyphicon glyphicon-road" data-toggle="tooltip" data-placement="right" title="현재 지도에서 가까운 시설을 찾습니다."></button></a>
+            <ul class="pull-right">
+                <li><button class="btn btn-default btn_left_near_1 glyphicon glyphicon-leaf" style="position: absolute; opacity: 0; left: 50px; top: 11px;" data-toggle="tooltip" data-placement="right" title="주변의 버스정류장 위치를 확인합니다."></button></li>
+                <li><button class="btn btn-default btn_left_near_2 glyphicon glyphicon-fire" style="position: absolute; opacity: 0; left: 90px; top: 11px;" data-toggle="tooltip" data-placement="right" title="주변의 고등학교 위치를 확인합니다."></button></li>
+                <li><button class="btn btn-default btn_left_near_3 glyphicon glyphicon-fire" style="position: absolute; opacity: 0; left: 130px; top: 11px;" data-toggle="tooltip" data-placement="right" title="주변의 중학교 위치를 확인합니다."></button></li>
+                <li><button class="btn btn-default btn_left_near_4 glyphicon glyphicon-fire" style="position: absolute; opacity: 0; left: 170px; top: 11px;" data-toggle="tooltip" data-placement="right" title="주변의 초등학교 위치를 확인합니다."></button></li>
+            </ul>
         </div>
-        <div class="col-md-1">
-            <button class="btn btn-default btn_left_poppul glyphicon glyphicon-user"></button>
+        <div class="visible-xs visible-sm col-md-1">
+            <button class="btn btn-default btn_left_crime glyphicon glyphicon-user" data-toggle="tooltip" data-placement="left" title="현재 지역의 범죄현황을 보여줍니다."></button>
         </div>
     </div>
     <div class="right_button">
         <div class="col-md-1">
-            <button class="btn btn-default btn_right_loc glyphicon glyphicon-screenshot"></button>
+            <button class="btn btn-default btn_right_loc glyphicon glyphicon-screenshot" data-toggle="tooltip" data-placement="left" title="현재 위치로 이동합니다."></button>
         </div>
         <div class="col-md-1">
-            <a><button class="btn btn-default btn_glob_0 glyphicon glyphicon-globe"></button></a>
+            <a><button class="btn btn-default btn_glob glyphicon glyphicon-globe" data-toggle="tooltip" data-placement="left" title="지도를 여러가지 형태로 보여줍니다."></button></a>
             <ul class="pull-left">
-                <li><button class="btn btn-default btn_glob_1 glyphicon glyphicon-leaf" style="position: absolute; opacity: 0; right: 50px; top: 11px;"></button></li>
-                <li><button class="btn btn-default btn_glob_2 glyphicon glyphicon-fire" style="position: absolute; opacity: 0; right: 90px; top: 11px;"></button></li>
+                <li><button class="btn btn-default btn_glob_1 glyphicon glyphicon-leaf" style="position: absolute; opacity: 0; right: 50px; top: 11px;" data-toggle="tooltip" data-placement="left" title="위성지도를 보여줍니다."></button></li>
+                <li><button class="btn btn-default btn_glob_2 glyphicon glyphicon-fire" style="position: absolute; opacity: 0; right: 90px; top: 11px;" data-toggle="tooltip" data-placement="left" title="지형도를 보여줍니다."></button></li>
+                <li><button class="btn btn-default btn_glob_3 glyphicon glyphicon-globe" style="position: absolute; opacity: 0; right: 130px; top: 11px;" data-toggle="tooltip" data-placement="left" title="기본 지도를 보여줍니다."></button></li>
             </ul>
         </div>
         <div class="col-md-1">
-            <button class="btn btn-default btn_right_dist glyphicon glyphicon-resize-horizontal"></button>
-        </div>
-        <div class="col-md-1">
-            <button class="btn btn-default btn_right_hide glyphicon glyphicon-map-marker"></button>
+            <button class="btn btn-default btn_right_hide glyphicon glyphicon-map-marker" data-toggle="tooltip" data-placement="left" title="지도의 마커를 초기화합니다."></button>
         </div>
     </div>
     <div class="bottom_current_loc_info">
@@ -232,7 +213,7 @@
                 resAddrdetail = items[0].addrdetail.sido + "-" + items[0].addrdetail.sigugun + "-" + items[0].addrdetail.dongmyun + "-" +  items[0].addrdetail.rest
                 var houses = dataList[index]; 
 
-                marker = new naver.maps.Marker({
+                var marker = new naver.maps.Marker({
                     position: new naver.maps.LatLng(lat, lng),
                     map: map,
                     icon: {
@@ -242,15 +223,15 @@
                                     '<div class="map_marker _marker">',
                                         '<div class="ico _icon" style=" position: absolute; z-index: 6000; background-image: url(' + '{% static "img/marker_each_green_64*64.png" %}' + '); width: 66px; height: 64px; background-position: -192px -64px;">',
                                             '<div><h6>' + '23' + '평</h6></div>',
-                                            '<div><h6>' + houses.price + '만원</h6></div>',
-                                            '<div style="display: none"><h6>' + houses.name + '</h6></div>',
-                                            '<div style="display: none"><h6>' + houses.fnd_year + '</h6></div>',
-                                            '<div style="display: none"><h6>' + houses.sold_date + '</h6></div>',
-                                            '<div style="display: none"><h6>' + houses.location + '</h6></div>',
-                                            '<div style="display: none"><h6>' + houses.loc_num + '</h6></div>',
-                                            '<div style="display: none"><h6>' + houses.loc_cd + '</h6></div>',
-                                            '<div style="display: none"><h6>' + houses.floor + '</h6></div>',
-                                            '<div style="display: none"><h6>' + resAddrdetail + '</h6></div>',
+                                            '<div><h6>' + houses.price.trim() + '만원</h6></div>',
+                                            '<div style="display: none"><h6>' + houses.name.trim() + '</h6></div>',
+                                            '<div style="display: none"><h6>' + houses.fnd_year.trim() + '</h6></div>',
+                                            '<div style="display: none"><h6>' + houses.sold_date.trim() + '</h6></div>',
+                                            '<div style="display: none"><h6>' + houses.location.trim() + '</h6></div>',
+                                            '<div style="display: none"><h6>' + houses.loc_num.trim() + '</h6></div>',
+                                            '<div style="display: none"><h6>' + houses.loc_cd.trim() + '</h6></div>',
+                                            '<div style="display: none"><h6>' + houses.floor.trim() + '</h6></div>',
+                                            '<div style="display: none"><h6>' + resAddrdetail.trim() + '</h6></div>',
                                         '</div>',
                                     '</div>',
                                 '</div>',
@@ -271,7 +252,7 @@
                 naver.maps.Event.addListener(marker, "click", function(e) {
                     var content = []
                     content = e.overlay.icon.content.replace(/(<([^>]+)>)/ig," ").split(/(\s+)/);
-                    
+
                     var name = content[6];
                     var price = content[4];
                     var fnd_year = content[8];
@@ -288,30 +269,38 @@
                 });
                         
                 var contentString = [
-                '<div class="iw_inner">',
-                    '   <h3>서울특별시청</h3>',
-                    '   <p>서울특별시 중구 태평로1가 31 | 서울특별시 중구 세종대로 110 서울특별시청<br />',
-                        '       <img src="'+ HOME_PATH +'/img/example/hi-seoul.jpg" width="55" height="55" alt="서울시청" class="thumb" /><br />',
-                        '       02-120 | 공공,사회기관 &gt; 특별,광역시청<br />',
-                        '       <a href="http://www.seoul.go.kr" target="_blank">www.seoul.go.kr/</a>',
-                        '   </p>',
-                        '</div>'
-                        ].join('');
+                '<div class="iw_inner" style="padding: 10px; padding-top: 0px;">',
+                '   <h4>' + houses.name.trim() + '&nbsp;<img src="/static/img/house2.png"></img></h4>',
+                '       <p>' + resAddrdetail.trim() + '<br/>',
+                '   </p>',
+                '</div>'
+                ].join('');
                         
-                        alert(contentString)
-                        var infowindow = new naver.maps.InfoWindow({
-                            content: contentString
-                        });
-                        
-                        naver.maps.Event.addListener(marker, "mouseover", function(e) {
-                            infowindow.open(map, marker);
-                        });
-                        
-                //infowindow.open(map, marker);
+                var infowindow = new naver.maps.InfoWindow({
+                    content: contentString,
+                    maxWidth: 250,
+                    backgroundColor: "white",
+                    borderColor: "grey",
+                    borderWidth: 0,
+                    anchorSize: new naver.maps.Size(2, 2),
+                    anchorSkew: true,
+                });
+                
+                naver.maps.Event.addListener(marker, "mouseover", function(e) {
+                    console.log(marker.eventTarget.childNodes["0"].innerHTML)
+                    console.log(marker)
+                    infowindow.open(map, marker);
+                });
+
+                naver.maps.Event.addListener(marker, "mouseout", function(e) {
+                    infowindow.close();
+                });    
             });
         }
         
-        getCenterAddr()
+        naver.maps.Event.addListener(map, 'bounds_changed', function(bounds) {
+            getCenterAddr()
+        });
         
     }
 
@@ -381,22 +370,36 @@
 
     $(document).ready(function(){
         
+        //상단 찾기 버튼
         $(".btn_search").click(function(){
             getAddr();
         });
 
+        //접기 버튼
         $(".btn_toggle_content").click(function(){
-            $(".top_layer_info").hide();
+            
+            if( $(".top_layer_info").hasClass('on') ){
+                $(".info_nav").css('height','10%');
+                $(".top_layer_info").css('height','500px');
+                $(".top_layer_info").removeClass('on');
+            }else{
+                $(".top_layer_info").css('overflow','hidden');
+                $(".info_nav").css('height','100%');
+                $(".top_layer_info").css('height','45px');
+                $(".top_layer_info").addClass('on');
+            }
+
         })
         
-        $(".filter_news").click(function(){
-            $(".top_layer_info").show();
-        })
-
+        //뒤로가기 버튼
         $(".btn_back").click(function(){
             $(".wrap_info_house").hide();
             $(".top_layer").show();
         });
+
+        //드롭다운 이벤트
+        $(".dropdown-toggle").dropdown();
+        $(".dropdown-toggle").dropdown("toggle");
 
         ////왼쪽 버튼
         //뉴스보기
@@ -419,11 +422,21 @@
         
         //지도 내의 정보 검색
         $(".btn_left_near").click(function(){
-
+            if($(".btn_left_near_1").css('opacity') == '1'){
+                $(".btn_left_near_1").css('opacity', '0');
+                $(".btn_left_near_2").css('opacity', '0');
+                $(".btn_left_near_3").css('opacity', '0');
+                $(".btn_left_near_4").css('opacity', '0');
+            }else{
+                $(".btn_left_near_1").css('opacity', '1');
+                $(".btn_left_near_2").css('opacity', '1');
+                $(".btn_left_near_3").css('opacity', '1');
+                $(".btn_left_near_4").css('opacity', '1');
+            }
         });
 
         //지도 내의 인구 표시
-        $(".btn_left_poppul").click(function(){
+        $(".btn_left_crime").click(function(){
 
         });
         
@@ -434,57 +447,58 @@
         });
 
         //지도 형태 변경 toggle 지도 형태 변경 0
-        $(".btn_glob_0").click(function(e) {
+        $(".btn_glob").click(function(e) {
             if($(".btn_glob_1").css('opacity') == '1'){
                 $(".btn_glob_1").css('opacity', '0');
                 $(".btn_glob_2").css('opacity', '0');
+                $(".btn_glob_3").css('opacity', '0');
             }else{
                 $(".btn_glob_1").css('opacity', '1');
                 $(".btn_glob_2").css('opacity', '1');
+                $(".btn_glob_3").css('opacity', '1');
             }
 
-            e.preventDefault();
-        
-            var mapTypeId = 'NORMAL';
-        
-            if (map.getMapTypeId() !== naver.maps.MapTypeId[mapTypeId]) {
-                map.setMapTypeId(naver.maps.MapTypeId[mapTypeId]); // 지도 유형 변경하기
-        
-                btns.removeClass("control-on");
-                $(this).addClass("control-on");
-            }
         });
         //지도 형태 변경 1
         $(".btn_glob_1").click(function(e) {
             $(".btn_glob_1").css('opacity', '0');
             $(".btn_glob_2").css('opacity', '0');
+            $(".btn_glob_3").css('opacity', '0');
             e.preventDefault();
         
             var mapTypeId = 'HYBRID';
         
             if (map.getMapTypeId() !== naver.maps.MapTypeId[mapTypeId]) {
                 map.setMapTypeId(naver.maps.MapTypeId[mapTypeId]); // 지도 유형 변경하기
-        
-                btns.removeClass("control-on");
-                $(this).addClass("control-on");
             }
         });
         //지도 형태 변경 2
         $(".btn_glob_2").click(function(e) {
             $(".btn_glob_1").css('opacity', '0');
             $(".btn_glob_2").css('opacity', '0');
+            $(".btn_glob_3").css('opacity', '0');
             e.preventDefault();
         
             var mapTypeId = 'TERRAIN';
         
             if (map.getMapTypeId() !== naver.maps.MapTypeId[mapTypeId]) {
                 map.setMapTypeId(naver.maps.MapTypeId[mapTypeId]); // 지도 유형 변경하기
-        
-                btns.removeClass("control-on");
-                $(this).addClass("control-on");
             }
         });
             
+        //지도 형태 변경 3
+        $(".btn_glob_3").click(function(e) {
+            $(".btn_glob_1").css('opacity', '0');
+            $(".btn_glob_2").css('opacity', '0');
+            $(".btn_glob_3").css('opacity', '0');
+            e.preventDefault();
+        
+            var mapTypeId = 'NORMAL';
+        
+            if (map.getMapTypeId() !== naver.maps.MapTypeId[mapTypeId]) {
+                map.setMapTypeId(naver.maps.MapTypeId[mapTypeId]); // 지도 유형 변경하기
+            }
+        });
 
         //지도상 거리 표현
         $(".btn_right_dist").click(function(){
