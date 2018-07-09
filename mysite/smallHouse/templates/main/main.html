@@ -132,10 +132,10 @@
         <div class="visible-xs visible-sm col-md-1">
             <a><button class="btn btn-default btn_left_near glyphicon glyphicon-road" data-toggle="tooltip" data-placement="right" title="현재 지도에서 가까운 시설을 찾습니다."></button></a>
             <ul class="pull-right">
-                <li><button class="btn btn-default btn_left_near_1 glyphicon glyphicon-leaf" style="position: absolute; opacity: 0; left: 50px; top: 11px;" data-toggle="tooltip" data-placement="right" title="주변의 버스정류장 위치를 확인합니다."></button></li>
-                <li><button class="btn btn-default btn_left_near_2 glyphicon glyphicon-fire" style="position: absolute; opacity: 0; left: 90px; top: 11px;" data-toggle="tooltip" data-placement="right" title="주변의 고등학교 위치를 확인합니다."></button></li>
-                <li><button class="btn btn-default btn_left_near_3 glyphicon glyphicon-fire" style="position: absolute; opacity: 0; left: 130px; top: 11px;" data-toggle="tooltip" data-placement="right" title="주변의 중학교 위치를 확인합니다."></button></li>
-                <li><button class="btn btn-default btn_left_near_4 glyphicon glyphicon-fire" style="position: absolute; opacity: 0; left: 170px; top: 11px;" data-toggle="tooltip" data-placement="right" title="주변의 초등학교 위치를 확인합니다."></button></li>
+                <li><button class="btn btn-default btn_left_near_1" style="position: absolute; opacity: 0; left: 50px; top: 11px;" data-toggle="tooltip" data-placement="right" title="주변의 버스정류장 위치를 확인합니다."><img src="{% static 'img/icon_bus.png' %}"></button></li>
+                <li><button class="btn btn-default btn_left_near_2" style="position: absolute; opacity: 0; left: 90px; top: 11px;" data-toggle="tooltip" data-placement="right" title="주변의 고등학교 위치를 확인합니다."><img src="{% static 'img/icon_high.png' %}"></button></li>
+                <li><button class="btn btn-default btn_left_near_3" style="position: absolute; opacity: 0; left: 130px; top: 11px;" data-toggle="tooltip" data-placement="right" title="주변의 중학교 위치를 확인합니다."><img src="{% static 'img/icon_middle.png' %}"></button></li>
+                <li><button class="btn btn-default btn_left_near_4" style="position: absolute; opacity: 0; left: 170px; top: 11px;" data-toggle="tooltip" data-placement="right" title="주변의 초등학교 위치를 확인합니다."><img src="{% static 'img/icon_elementary.png' %}"></button></li>
             </ul>
         </div>
         <div class="visible-xs visible-sm col-md-1">
@@ -521,6 +521,11 @@
             }
 
             map = new naver.maps.Map('map', mapOptions);    
+
+            //현재 위치 체크
+            naver.maps.Event.addListener(map, 'bounds_changed', function(bounds) {
+                getCenterAddr()
+            });
         });
 
         //현재 위치 체크 initiate
