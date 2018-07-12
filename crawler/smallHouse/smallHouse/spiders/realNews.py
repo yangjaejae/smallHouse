@@ -38,11 +38,15 @@ class RealnewsSpider(scrapy.Spider):
                 item['title'] = "".join(txt.css('dt')[0].css('a::text').re(r'[^\t\r\n\v\f].*?[^\t\r\n\v\f]'))
                 item['url'] = txt.css('dt')[0].css('a::attr(href)').extract_first()
                 item['newspaper'] = txt.css('dd')[0].css('span.writing::text').extract_first()
+                item['summary'] = txt.css('dd')[0].css('span.lede::text').extract_first()
+                item['wr_date'] = response.css('div.pagenavi_day').css('span.viewday::text').extract_first()
             else:
 
                 item['title'] = txt.css('dt.photo a img::attr(alt)').extract_first()
                 item['url'] = txt.css('dt')[0].css('a::attr(href)').extract_first()
                 item['newspaper'] = txt.css('dd')[0].css('span.writing::text').extract_first()
+                item['summary'] = txt.css('dd')[0].css('span.lede::text').extract_first()
+                item['wr_date'] = response.css('div.pagenavi_day').css('span.viewday::text').extract_first()
             yield item
             print(item)
 

@@ -1,4 +1,4 @@
-#!/home/yangjaeho/dev/pythonPrj/smallPrj/myvenv/bin/python3
+#!/home/yangjaeho/dev/pythonPrj/smallPrj/myvenv/bin/python3.6
 
 # -*- coding: utf-8 -*-
 import re

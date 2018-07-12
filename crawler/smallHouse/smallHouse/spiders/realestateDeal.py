@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import scrapy
 import re
-import sys
 from smallHouse.items import RealEstate
 from smallHouse.dao.getLocCode import getCodeList 
 
@@ -42,18 +41,24 @@ class RealestatedealSpider(scrapy.Spider):
         for li in data:
             each = li.xpath('//item').extract()
             for e in each:
-                eachList = []
-                eachData = re.sub('<[^<]+?>', ' ', e)
-                eachList = eachData.split(' ')
-                sold_date = eachList[10] + "." + eachList[19]
+                sold_date = ''
+                year = re.findall(r'<년>(.*?)</년>',e)[0]
+                dot = "."
+                month = re.findall(r'<월>(.*?)</월>',e)[0]
+                sold_date = year + dot + month
                 item = RealEstate()
-                item['name'] = eachList[17]
-                item['price'] = eachList[6]
-                item['fnd_year'] = eachList[8]
+                item['name'] = re.findall(r'<연립다세대>(.*?)</연립다세대>',e)[0].strip()
+                item['price'] = re.findall(r'<거래금액>(.*?)</거래금액>',e)[0].strip()
+                item['price_deposit'] = ''
+                item['price_monthly'] = ''
+                item['fnd_year'] = re.findall(r'<건축년도>(.*?)</건축년도>',e)[0].strip()
                 item['sold_date'] = sold_date
-                item['location'] = eachList[15]
-                item['loc_num'] = eachList[25]
-                item['loc_cd'] = eachList[27]
-                item['floor'] = eachList[29]
+                item['location'] = re.findall(r'<법정동>(.*?)</법정동>',e)[0].strip()
+                item['loc_num'] = re.findall(r'<지번>(.*?)</지번>',e)[0].strip()
+                item['loc_cd'] = re.findall(r'<지역코드>(.*?)</지역코드>',e)[0].strip()
+                item['floor'] = re.findall(r'<층>(.*?)</층>',e)[0].strip()
+                item['area_average'] = re.findall(r'<전용면적>(.*?)</전용면적>',e)[0].strip()
+                item['bldg_type'] = '01'
+                item['buy_type'] = '01'
                 yield item
                 print(item)

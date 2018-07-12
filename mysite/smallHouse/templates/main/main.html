@@ -13,18 +13,18 @@
                 <div class="" id="">
                     <ul class="">
                         <li class="dropdown">
+                            <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown" role="button">전세/매매</span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a id="main_dropdown_rent" href="#">매매</a></li>
+                                <li><a id="main_dropdown_rent" href="#">전 월세</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
                         <button href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown" role="button">주택</span></button>
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="#">다세대 연립</a></li>
                             <li><a href="#">단독/다가구</a></li>
                         </ul>
-                        </li>
-                        <li class="dropdown">
-                            <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown" role="button">전세/매매</span></a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="#">전세</a></li>
-                                <li><a href="#">매매</a></li>
-                            </ul>
                         </li>
                     </ul>
                 </div>
@@ -32,7 +32,7 @@
         </div>
         <div class="visible-md visible-lg col-md-3 top_layer_info">
             <div class="info_nav" style="background-color: cornflowerblue; color:white; text-align:center;">
-                <div class="visible-xs visible-sm glyphicon glyphicon-chevron-left btn_left_news_back"></div>
+                <div class="visible-xs visible-sm btn_left_news_back"><a class="glyphicon glyphicon-chevron-left" style="color:azure"></a></div>
                 <span><h3>부동산 뉴스</h3></span>
                 <a href="#" class="visible-md visible-lg btn_toggle_content" style="color:white;">접기<span class="caret"></span></a>
             </div>
@@ -42,9 +42,11 @@
                     <tr>
                         <td>
                             <a href="{{ new.url }}">
-                                <p>{{ new.title }}</p>
+                                <p><h4 style="color:black;">{{ new.title }}</h4></p>
                             </a>
-                            <p>-{{ new.newspaper }}-</p>
+                            <p>{{ new.summary }}</p>
+                            <p>-{{ new.newspaper }}- &nbsp;&nbsp; {{ new.wr_date }}</p>
+                            <hr/>
                         </td>
                     </tr>
                     {% endfor %}
@@ -53,7 +55,7 @@
         </div>
     </div>
     <!-- 클릭 후 상세 정보 -->
-    <div class="col-md-3 wrap_info_house">
+    <div class="col-md-3 wrap_info_house_deal">
         <div class="top_layer_nav">
             <div class="input-group-lg top_layer_search">
                 <input type="text" class="top_layer_keyword" onkeypress="if( event.keyCode==13 ){goSearch();}" placeholder="검색어를 입력하세요(ex.서초동)"/>
@@ -82,8 +84,8 @@
                     <li class="dropdown">
                         <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown" role="button">전세/매매</span></a>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">전세</a></li>
-                            <li><a href="#">매매</a></li>
+                            <li><a id="detail_dropdown_deal" href="#">매매</a></li>
+                            <li><a id="detail_dropdown_rent" href="#">전 월세</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -133,9 +135,8 @@
             <a><button class="btn btn-default btn_left_near glyphicon glyphicon-road" data-toggle="tooltip" data-placement="right" title="현재 지도에서 가까운 시설을 찾습니다."></button></a>
             <ul class="pull-right">
                 <li><button class="btn btn-default btn_left_near_1" style="position: absolute; opacity: 0; left: 50px; top: 11px;" data-toggle="tooltip" data-placement="right" title="주변의 버스정류장 위치를 확인합니다."><img src="{% static 'img/icon_bus.png' %}"></button></li>
-                <li><button class="btn btn-default btn_left_near_2" style="position: absolute; opacity: 0; left: 90px; top: 11px;" data-toggle="tooltip" data-placement="right" title="주변의 고등학교 위치를 확인합니다."><img src="{% static 'img/icon_high.png' %}"></button></li>
-                <li><button class="btn btn-default btn_left_near_3" style="position: absolute; opacity: 0; left: 130px; top: 11px;" data-toggle="tooltip" data-placement="right" title="주변의 중학교 위치를 확인합니다."><img src="{% static 'img/icon_middle.png' %}"></button></li>
-                <li><button class="btn btn-default btn_left_near_4" style="position: absolute; opacity: 0; left: 170px; top: 11px;" data-toggle="tooltip" data-placement="right" title="주변의 초등학교 위치를 확인합니다."><img src="{% static 'img/icon_elementary.png' %}"></button></li>
+                <li><button class="btn btn-default btn_left_near_2 glyphicon glyphicons-plus" style="position: absolute; opacity: 0; left: 90px; top: 11px;" data-toggle="tooltip" data-placement="right" title="주변의 병원 위치를 확인합니다."></button></li>
+                <li><button class="btn btn-default btn_left_near_2" style="position: absolute; opacity: 0; left: 90px; top: 11px;" data-toggle="tooltip" data-placement="right" title="주변의 동물병원 위치를 확인합니다."><img src="{% static 'img/icon_high.png' %}"></button></li>
             </ul>
         </div>
         <div class="visible-xs visible-sm col-md-1">
@@ -264,7 +265,7 @@
                     $("#detail_addr").text(addr1);
                     $("#detail_addr_detail").text(addr2);
                     $("#detail_price_avg").text(price);
-                    $(".wrap_info_house").show();
+                    $(".wrap_info_house_deal").show();
                 
                 });
                         
@@ -393,7 +394,7 @@
         
         //뒤로가기 버튼
         $(".btn_back").click(function(){
-            $(".wrap_info_house").hide();
+            $(".wrap_info_house_deal").hide();
             $(".top_layer").show();
         });
 
