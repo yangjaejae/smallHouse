@@ -23,26 +23,27 @@ class TranslocationSpider(scrapy.Spider):
     ]
 
     def __init__(self):
-        self.osPath = os.getcwd()
-        self.osPath += '/smallHouse/files/'
+        osPath = os.getcwd()
+        self.filePath = osPath + '/smallHouse/files/'
+        driverPath = osPath + '/smallHouse/driver/chromedriver'
+        downloadPath = osPath
+        print(driverPath)
 
-        download_dir = self.osPath
         options = webdriver.ChromeOptions()
         options.add_experimental_option("prefs", {
-            "download.default_directory": download_dir,
+            "download.default_directory": downloadPath,
             "download.prompt_for_download": False,
             "download.directory_upgrade": True,
             "safebrowsing.enabled": True
         })
-        self.driver = webdriver.Chrome('/home/yangjaeho/dev/pythonPrj/smallPrj/chromedriver', chrome_options=options)
+        self.driver = webdriver.Chrome(driverPath, chrome_options=options)
     
     def parse(self,response):
-        print(self.osPath)
         self.driver.implicitly_wait(3)
         self.driver.get(response.url)
         self.driver.find_element_by_css_selector("#dataDiv > div > table > tbody > tr > td:nth-child(6) > a").click()
-        filePath = self.osPath + '서울시 버스정류소 위치 데이터(20180502).xls'
-        wb = xlrd.open_workbook(filePath)
+        inputFilePath = self.filePath + '서울시 버스정류소 위치 데이터(20180502).xls'
+        wb = xlrd.open_workbook(inputFilePath)
         ws = wb.sheet_by_index(0)
         ncol = ws.ncols
         nlow = ws.nrows
