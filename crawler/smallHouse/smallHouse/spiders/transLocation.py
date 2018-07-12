@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import scrapy
 import re
+import os
 from smallHouse.items import Trans_info
 import openpyxl
 import xlrd
@@ -22,7 +23,10 @@ class TranslocationSpider(scrapy.Spider):
     ]
 
     def __init__(self):
-        download_dir = '/home/yangjaeho/dev/pythonPrj/smallPrj/crawler/smallHouse/smallHouse/files'
+        self.osPath = os.getcwd()
+        self.osPath += '/smallHouse/files/'
+
+        download_dir = self.osPath
         options = webdriver.ChromeOptions()
         options.add_experimental_option("prefs", {
             "download.default_directory": download_dir,
@@ -33,11 +37,12 @@ class TranslocationSpider(scrapy.Spider):
         self.driver = webdriver.Chrome('/home/yangjaeho/dev/pythonPrj/smallPrj/chromedriver', chrome_options=options)
     
     def parse(self,response):
+        print(self.osPath)
         self.driver.implicitly_wait(3)
         self.driver.get(response.url)
         self.driver.find_element_by_css_selector("#dataDiv > div > table > tbody > tr > td:nth-child(6) > a").click()
-
-        wb = xlrd.open_workbook('/home/yangjaeho/dev/pythonPrj/smallPrj/crawler/smallHouse/smallHouse/files/서울시 버스정류소 위치 데이터(20180502).xls')
+        filePath = self.osPath + '서울시 버스정류소 위치 데이터(20180502).xls'
+        wb = xlrd.open_workbook(filePath)
         ws = wb.sheet_by_index(0)
         ncol = ws.ncols
         nlow = ws.nrows
@@ -54,3 +59,6 @@ class TranslocationSpider(scrapy.Spider):
             yield item
             # print(item)
             i += 1
+
+# /home/yangjaeho/dev/pythonPrj/smallPrj/crawler/smallHouse/smallHouse/files/서울시 버스정류소 위치 데이터(20180502).xls
+# /home/yangjaeho/dev/pythonPrj/smallPrj/crawler/smallHouse/smallHouse/files/서울시 버스정류소 위치 데이터(20180502).xls'
