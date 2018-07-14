@@ -134,9 +134,9 @@
         <div class="visible-xs visible-sm col-md-1">
             <a><button class="btn btn-default btn_left_near glyphicon glyphicon-road" data-toggle="tooltip" data-placement="right" title="현재 지도에서 가까운 시설을 찾습니다."></button></a>
             <ul class="pull-right">
-                <li><button class="btn btn-default btn_left_near_1" style="position: absolute; opacity: 0; left: 50px; top: 11px;" data-toggle="tooltip" data-placement="right" title="주변의 버스정류장 위치를 확인합니다."><img src="{% static 'img/icon_bus.png' %}"></button></li>
-                <li><button class="btn btn-default btn_left_near_2 glyphicon glyphicons-plus" style="position: absolute; opacity: 0; left: 90px; top: 11px;" data-toggle="tooltip" data-placement="right" title="주변의 병원 위치를 확인합니다."></button></li>
-                <li><button class="btn btn-default btn_left_near_2" style="position: absolute; opacity: 0; left: 90px; top: 11px;" data-toggle="tooltip" data-placement="right" title="주변의 동물병원 위치를 확인합니다."><img src="{% static 'img/icon_high.png' %}"></button></li>
+                <li><button class="btn btn-default btn_left_near_bus" style="position: absolute; opacity: 0; left: 50px; top: 11px;" data-toggle="tooltip" data-placement="right" title="주변의 버스정류장 위치를 확인합니다."><img src="{% static 'img/button/btn_bus.png' %}"></button></li>
+                <li><button class="btn btn-default btn_left_near_hos" style="position: absolute; opacity: 0; left: 90px; top: 11px;" data-toggle="tooltip" data-placement="right" title="주변의 병원 위치를 확인합니다."><img src="{% static 'img/button/btn_hospital.png' %}"></button></li>
+                <li><button class="btn btn-default btn_left_near_veg" style="position: absolute; opacity: 0; left: 130px; top: 11px;" data-toggle="tooltip" data-placement="right" title="주변의 동물병원 위치를 확인합니다."><img src="{% static 'img/button/btn_veg1.png' %}"></button></li>
             </ul>
         </div>
         <div class="visible-xs visible-sm col-md-1">
@@ -156,7 +156,7 @@
             </ul>
         </div>
         <div class="col-md-1">
-            <button class="btn btn-default btn_right_hide glyphicon glyphicon-map-marker" data-toggle="tooltip" data-placement="left" title="지도의 마커를 초기화합니다."></button>
+            <button class="btn btn-default btn_right_hide glyphicon glyphicon-refresh" data-toggle="tooltip" data-placement="left" title="지도의 마커를 초기화합니다."></button>
         </div>
     </div>
     <div class="bottom_current_loc_info">
@@ -270,8 +270,8 @@
                 });
                         
                 var contentString = [
-                '<div class="iw_inner" style="padding: 10px; padding-top: 0px;">',
-                '   <h4>' + houses.name.trim() + '&nbsp;<img src="/static/img/house2.png"></img></h4>',
+                '<div class="iw_inner">',
+                '   <h4>' + houses.name.trim() + '&nbsp;<img src="/static/img/icon/house2.png"></img></h4>',
                 '       <p>' + resAddrdetail.trim() + '<br/>',
                 '   </p>',
                 '</div>'
@@ -288,8 +288,6 @@
                 });
                 
                 naver.maps.Event.addListener(marker, "mouseover", function(e) {
-                    console.log(marker.eventTarget.childNodes["0"].innerHTML)
-                    console.log(marker)
                     infowindow.open(map, marker);
                 });
 
@@ -367,6 +365,110 @@
 
             $(".btn_loc_info").text(sido + " " + sigun + " " + dong);
         });
+        return center;
+    }
+
+    function getBusStop(){
+
+        var bounds = map.getBounds(),
+            southWest = bounds.getSW(),
+            northEast = bounds.getNE()
+
+        $.ajax({
+            type: 'GET',
+            url: '{% url "getBusStop" %}', 
+            data: {
+                "lat_start": southWest.lng(),
+                "lat_end": northEast.lng(),
+                "lng_start": southWest.lat(),
+                "lng_end": northEast.lat()
+            },
+            dataType: 'json',
+            error: function( jqXHR, textStatus, errorThrown ){
+                alert('status: ' + textStatus + '\nerror: ' + jqXHR.error )
+            },
+            success: function(datas){
+                
+                var dataList = datas.result
+                console.log(dataList)
+
+                for( var i=0; i<dataList.length; i++ ){
+                    
+                    var marker = new naver.maps.Marker({
+                        position: new naver.maps.LatLng(dataList[i].gpslng, dataList[i].gpslat),
+                        map: map,
+                        icon: {
+                            url: '{% static "img/icon_bus_stop.png" %}',
+                            size: new naver.maps.Size(50, 52),
+                            origin: new naver.maps.Point(0, 0),
+                            anchor: new naver.maps.Point(25, 26)
+                        }
+                    });
+
+                    markers.push(marker)
+
+                    var contentString = [
+                        '<div class="iw_inner">',
+                            '<div><img src="/static/img/pin/pin_bus_stop.png"></img></div>',
+                            '<h5>' + dataList[i].name.trim() + '<h5>',
+                        '</div>'
+                    ].join('');
+                        
+                    var infowindow = new naver.maps.InfoWindow({
+                        content: contentString,
+                        maxWidth: 500,
+                        backgroundColor: "white",
+                        borderColor: "grey",
+                        borderWidth: 0,
+                        anchorSize: new naver.maps.Size(2, 2),
+                        anchorSkew: true,
+                    });
+                    
+                    naver.maps.Event.addListener(marker, "mouseover", function(e) {
+                        infowindow.open(map, marker);
+                    });
+                    
+                    naver.maps.Event.addListener(marker, "mouseout", function(e) {
+                        infowindow.close();
+                    });    
+                }
+                
+                naver.maps.Event.addListener(map, 'idle', function() {
+                    updateMarkers(map, markers);
+                });
+
+            }
+        });
+    }
+
+    function updateMarkers(map, markers) {
+
+        var mapBounds = map.getBounds();
+        var marker, position;
+    
+        for (var i = 0; i < markers.length; i++) {
+    
+            marker = markers[i]
+            position = marker.getPosition();
+    
+            if (mapBounds.hasLatLng(position)) {
+                showMarker(map, marker);
+            } else {
+                hideMarker(map, marker);
+            }
+        }
+    }
+
+    function showMarker(map, marker) {
+
+        if (marker.setMap()) return;
+        marker.setMap(map);
+    }
+    
+    function hideMarker(map, marker) {
+    
+        if (!marker.setMap()) return;
+        marker.setMap(null);
     }
 
     $(document).ready(function(){
@@ -375,7 +477,7 @@
         $(".btn_search").click(function(){
             getAddr();
         });
-
+        
         //접기 버튼
         $(".btn_toggle_content").click(function(){
             
@@ -416,27 +518,31 @@
             $(".btn_left_news_back").css('top','12%');
             $(".btn_left_news_back").css('left','3%');
         });
-
+        
+        //작은 화면 뉴스보기 뒤로가기 버튼
         $(".btn_left_news_back").click(function(){
             location.reload();
         });
         
         //지도 내의 정보 검색
         $(".btn_left_near").click(function(){
-            if($(".btn_left_near_1").css('opacity') == '1'){
-                $(".btn_left_near_1").css('opacity', '0');
-                $(".btn_left_near_2").css('opacity', '0');
-                $(".btn_left_near_3").css('opacity', '0');
-                $(".btn_left_near_4").css('opacity', '0');
+            if($(".btn_left_near_bus").css('opacity') == '1'){
+                $(".btn_left_near_bus").css('opacity', '0');
+                $(".btn_left_near_hos").css('opacity', '0');
+                $(".btn_left_near_veg").css('opacity', '0');
             }else{
-                $(".btn_left_near_1").css('opacity', '1');
-                $(".btn_left_near_2").css('opacity', '1');
-                $(".btn_left_near_3").css('opacity', '1');
-                $(".btn_left_near_4").css('opacity', '1');
+                $(".btn_left_near_bus").css('opacity', '1');
+                $(".btn_left_near_hos").css('opacity', '1');
+                $(".btn_left_near_veg").css('opacity', '1');
             }
         });
 
-        //지도 내의 인구 표시
+        //버스 정류장 검색
+        $(".btn_left_near_bus").click(function(){
+            getBusStop();
+        });
+
+        //지도 내의 범죄 표시
         $(".btn_left_crime").click(function(){
 
         });

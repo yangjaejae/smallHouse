@@ -74,6 +74,16 @@ class AuthUserUserPermissions(models.Model):
         unique_together = (('user', 'permission'),)
 
 
+class CrimeInfo(models.Model):
+    gpslat = models.CharField(max_length=10, blank=True, null=True)
+    gpslng = models.CharField(max_length=10, blank=True, null=True)
+    trans_type = models.IntegerField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'crime_info'
+
+
 class DjangoAdminLog(models.Model):
     action_time = models.DateTimeField()
     object_id = models.TextField(blank=True, null=True)
@@ -161,6 +171,16 @@ class Realnews(models.Model):
         db_table = 'realnews'
 
 
+class SchoolInfo(models.Model):
+    gpslat = models.CharField(max_length=10, blank=True, null=True)
+    gpslng = models.CharField(max_length=10, blank=True, null=True)
+    trans_type = models.IntegerField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'school_info'
+
+
 class SmallHouseRealestate(models.Model):
     name = models.CharField(max_length=100, blank=True, null=True)
     price = models.CharField(max_length=20, blank=True, null=True)
@@ -200,3 +220,15 @@ class TransIconPath(models.Model):
     class Meta:
         managed = False
         db_table = 'trans_icon_path'
+
+
+class TransInfo(models.Model):
+    num = models.IntegerField(primary_key=True)
+    name = models.CharField(max_length=20, blank=True, null=True)
+    gpslat = models.CharField(max_length=20, blank=True, null=True)
+    gpslng = models.CharField(max_length=20, blank=True, null=True)
+    trans_type = models.IntegerField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'trans_info'

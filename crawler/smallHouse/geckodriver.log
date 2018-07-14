@@ -1,0 +1,63 @@
+1531381447909	geckodriver	INFO	Listening on 127.0.0.1:56531
+1531381448899	mozprofile::profile	INFO	Using profile path /tmp/rust_mozprofile.Za3I5Nib3mF7
+1531381448901	geckodriver::marionette	INFO	Starting browser /usr/bin/firefox
+1531381448905	geckodriver::marionette	INFO	Connecting to Marionette on localhost:37167
+1531381451843	Marionette	INFO	Listening on port 2828
+[Parent 17329, Gecko_IOThread] WARNING: pipe error (75): 상대편이 연결을 끊음: file /build/firefox-oscv9o/firefox-61.0.1+build1/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 353
+*** UTM:SVC TimerManager:registerTimer called after profile-before-change notification. Ignoring timer registration for id: telemetry_modules_ping
+1531381517487	geckodriver	INFO	Listening on 127.0.0.1:55967
+1531381518486	mozprofile::profile	INFO	Using profile path /tmp/rust_mozprofile.2D9oW4qcgge0
+1531381518489	geckodriver::marionette	INFO	Starting browser /usr/bin/firefox
+1531381518492	geckodriver::marionette	INFO	Connecting to Marionette on localhost:37077
+1531381520913	Marionette	INFO	Listening on port 2828
+1531381619846	geckodriver	INFO	Listening on 127.0.0.1:46957
+1531381620842	mozprofile::profile	INFO	Using profile path /tmp/rust_mozprofile.umcuZPzrCXvz
+1531381620844	geckodriver::marionette	INFO	Starting browser /usr/bin/firefox
+1531381620847	geckodriver::marionette	INFO	Connecting to Marionette on localhost:38549
+1531381623392	Marionette	INFO	Listening on port 2828
+[Parent 18087, Gecko_IOThread] WARNING: pipe error (66): 상대편이 연결을 끊음: file /build/firefox-oscv9o/firefox-61.0.1+build1/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 353
+*** UTM:SVC TimerManager:registerTimer called after profile-before-change notification. Ignoring timer registration for id: telemetry_modules_ping
+1531381730671	geckodriver	INFO	Listening on 127.0.0.1:51353
+1531381731670	mozprofile::profile	INFO	Using profile path /tmp/rust_mozprofile.vATj3wZAKYj1
+1531381731671	geckodriver::marionette	INFO	Starting browser /usr/bin/firefox
+1531381731673	geckodriver::marionette	INFO	Connecting to Marionette on localhost:39429
+1531381734106	Marionette	INFO	Listening on port 2828
+1531381795305	geckodriver	INFO	Listening on 127.0.0.1:45251
+1531381796307	mozprofile::profile	INFO	Using profile path /tmp/rust_mozprofile.SsCBEfRVDg5E
+1531381796310	geckodriver::marionette	INFO	Starting browser /usr/bin/firefox
+1531381796314	geckodriver::marionette	INFO	Connecting to Marionette on localhost:44591
+1531381798886	Marionette	FATAL	Remote protocol server failed to start: Error: Could not bind to port 2828 (NS_ERROR_SOCKET_ADDRESS_IN_USE) (chrome://marionette/content/server.js:87:17) JS Stack trace: set acceptConnections@server.js:87:17
+start@server.js:116:5
+init/<@marionette.js:442:9
+1531381798917	addons.xpi	WARN	Exception running bootstrap method shutdown on activity-stream@mozilla.org: [Exception... "Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIObserverService.removeObserver]"  nsresult: "0x80004005 (NS_ERROR_FAILURE)"  location: "JS frame :: resource://activity-stream/lib/TelemetryFeed.jsm :: uninit :: line 493"  data: no] Stack trace: uninit()@resource://activity-stream/lib/TelemetryFeed.jsm:493
+onAction()@resource://activity-stream/lib/TelemetryFeed.jsm:451
+_middleware/</<()@resource://activity-stream/lib/Store.jsm:51
+Store/this[method]()@resource://activity-stream/lib/Store.jsm:29
+uninit()@resource://activity-stream/lib/Store.jsm:170
+uninit()@resource://activity-stream/lib/ActivityStream.jsm:318
+uninit()@resource://gre/modules/addons/XPIProvider.jsm -> jar:file:///usr/lib/firefox/browser/features/activity-stream@mozilla.org.xpi!/bootstrap.js:79
+shutdown()@resource://gre/modules/addons/XPIProvider.jsm -> jar:file:///usr/lib/firefox/browser/features/activity-stream@mozilla.org.xpi!/bootstrap.js:187
+callBootstrapMethod()@resource://gre/modules/addons/XPIProvider.jsm:2757
+observe()@resource://gre/modules/addons/XPIProvider.jsm:1672
+init/<()@jar:file:///usr/lib/firefox/omni.ja!/components/marionette.js:447
+JavaScript error: resource:///modules/SavantShieldStudy.jsm, line 171: TypeError: this.addonListener is undefined
+*** UTM:SVC TimerManager:registerTimer called after profile-before-change notification. Ignoring timer registration for id: telemetry_modules_ping
+[Parent 18402, Gecko_IOThread] WARNING: pipe error (66): 상대편이 연결을 끊음: file /build/firefox-oscv9o/firefox-61.0.1+build1/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 353
+1531382186829	geckodriver	INFO	Listening on 127.0.0.1:46535
+1531382187828	mozprofile::profile	INFO	Using profile path /tmp/rust_mozprofile.KXzqJ0AolCJe
+1531382187832	geckodriver::marionette	INFO	Starting browser /usr/bin/firefox
+1531382187835	geckodriver::marionette	INFO	Connecting to Marionette on localhost:44013
+1531382190185	Marionette	INFO	Listening on port 2828
+[Parent 19132, Gecko_IOThread] WARNING: pipe error (66): 상대편이 연결을 끊음: file /build/firefox-oscv9o/firefox-61.0.1+build1/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 353
+1531383883316	geckodriver	INFO	Listening on 127.0.0.1:53443
+1531383884311	mozprofile::profile	INFO	Using profile path /tmp/rust_mozprofile.H2U9nu8rszBT
+1531383884312	geckodriver::marionette	INFO	Starting browser /usr/bin/firefox
+1531383884314	geckodriver::marionette	INFO	Connecting to Marionette on localhost:35209
+1531383886778	Marionette	INFO	Listening on port 2828
+[Parent 21143, Gecko_IOThread] WARNING: pipe error (68): 상대편이 연결을 끊음: file /build/firefox-oscv9o/firefox-61.0.1+build1/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 353
+1531555581766	geckodriver	INFO	Listening on 127.0.0.1:53627
+1531555582761	mozprofile::profile	INFO	Using profile path /tmp/rust_mozprofile.9O9sUrLwPErW
+1531555582763	geckodriver::marionette	INFO	Starting browser /usr/bin/firefox
+1531555582765	geckodriver::marionette	INFO	Connecting to Marionette on localhost:39151
+1531555585841	Marionette	INFO	Listening on port 2828
+Invalid port. Exiting...
