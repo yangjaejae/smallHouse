@@ -398,7 +398,7 @@
                         position: new naver.maps.LatLng(dataList[i].gpslng, dataList[i].gpslat),
                         map: map,
                         icon: {
-                            url: '{% static "img/icon_bus_stop.png" %}',
+                            url: '{% static "img/pin/pin_bus_stop.png" %}',
                             size: new naver.maps.Size(50, 52),
                             origin: new naver.maps.Point(0, 0),
                             anchor: new naver.maps.Point(25, 26)
@@ -409,7 +409,7 @@
 
                     var contentString = [
                         '<div class="iw_inner">',
-                            '<div><img src="/static/img/pin/pin_bus_stop.png"></img></div>',
+                            '<div><img src="/static/img/icon/icon_bus_stop.png"></img></div>',
                             '<h5>' + dataList[i].name.trim() + '<h5>',
                         '</div>'
                     ].join('');
