@@ -196,6 +196,7 @@
         map = new naver.maps.Map('map', mapOptions);
 
         dataList = listMap.result
+        console.log(dataList)
         var resAddrdetail = "";
         var index = 0;
         for( var i=0; i < dataList.length; i++ ){
@@ -214,6 +215,8 @@
                 resAddrdetail = items[0].addrdetail.sido + "-" + items[0].addrdetail.sigugun + "-" + items[0].addrdetail.dongmyun + "-" +  items[0].addrdetail.rest
                 var houses = dataList[index]; 
 
+                console.log(houses)
+
                 var marker = new naver.maps.Marker({
                     position: new naver.maps.LatLng(lat, lng),
                     map: map,
@@ -222,17 +225,11 @@
                             '<div class="cs_mapbridge">',
                                 '<div class="map_group _map_group">',
                                     '<div class="map_marker _marker">',
-                                        '<div class="ico _icon" style=" position: absolute; z-index: 6000; background-image: url(' + '{% static "img/marker_each_green_64*64.png" %}' + '); width: 66px; height: 64px; background-position: -192px -64px;">',
-                                            '<div><h6>' + '23' + '평</h6></div>',
-                                            '<div><h6>' + houses.price.trim() + '만원</h6></div>',
-                                            '<div style="display: none"><h6>' + houses.name.trim() + '</h6></div>',
-                                            '<div style="display: none"><h6>' + houses.fnd_year.trim() + '</h6></div>',
-                                            '<div style="display: none"><h6>' + houses.sold_date.trim() + '</h6></div>',
-                                            '<div style="display: none"><h6>' + houses.location.trim() + '</h6></div>',
-                                            '<div style="display: none"><h6>' + houses.loc_num.trim() + '</h6></div>',
-                                            '<div style="display: none"><h6>' + houses.loc_cd.trim() + '</h6></div>',
-                                            '<div style="display: none"><h6>' + houses.floor.trim() + '</h6></div>',
-                                            '<div style="display: none"><h6>' + resAddrdetail.trim() + '</h6></div>',
+                                        '<div class="ico _icon" style=" position: absolute; z-index: 6000; background-image: url(' + '{% static "img/pin/marker_each_green_64*64.png" %}' + '); width: 66px; height: 64px; background-position: -192px -64px;">',
+                                            '<div><h6>' + houses.area_average + '평</h6></div>',
+                                            '<div><h6>' + houses.price_avg + '억</h6></div>',
+                                            '<div style="display: none"><h6>' + houses.name + '</h6></div>',
+                                            '<div style="display: none"><h6>' + resAddrdetail + '</h6></div>',
                                         '</div>',
                                     '</div>',
                                 '</div>',
@@ -271,8 +268,8 @@
                         
                 var contentString = [
                 '<div class="iw_inner">',
-                '   <h4>' + houses.name.trim() + '&nbsp;<img src="/static/img/icon/house2.png"></img></h4>',
-                '       <p>' + resAddrdetail.trim() + '<br/>',
+                '   <h4>' + houses.name + '&nbsp;<img src="/static/img/icon/house2.png"></img></h4>',
+                '       <p>' + resAddrdetail + '<br/>',
                 '   </p>',
                 '</div>'
                 ].join('');

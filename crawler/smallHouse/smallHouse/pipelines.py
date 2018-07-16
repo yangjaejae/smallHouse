@@ -14,18 +14,18 @@ class EstateDealPipeline(object):
             CREATE TABLE IF NOT EXISTS small_house_realestate(
                 id SERIAL PRIMARY KEY,
                 name char(100),
-                price char(20),
-                price_deposit char(20),
-                price_monthly char(20),
-                fnd_year char(20),
-                sold_date char(20),
-                location char(20),
-                loc_num char(20),
-                loc_cd char(20),
-                floor char(20),
-                area_average char(20),
-                buy_type char(20),
-                bldg_type char(20)
+                price int,
+                price_deposit int,
+                price_monthly int,
+                fnd_year varchar(20),
+                sold_date varchar(20),
+                location varchar(20),
+                loc_num varchar(20),
+                loc_cd varchar(20),
+                floor int,
+                area_average numeric,
+                buy_type int,
+                bldg_type int
             )
             '''
         )
@@ -130,6 +130,7 @@ class TransLocationPipeline(object):
         self.cur.execute(
             '''
             CREATE TABLE IF NOT EXISTS trans_info(
+                id SERIAL PRIMARY KEY,
                 num int primary key,
                 name varchar(20),
                 gpslat varchar(20),

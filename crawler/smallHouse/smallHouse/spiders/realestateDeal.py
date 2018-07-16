@@ -48,9 +48,9 @@ class RealestatedealSpider(scrapy.Spider):
                 sold_date = year + dot + month
                 item = RealEstate()
                 item['name'] = re.findall(r'<연립다세대>(.*?)</연립다세대>',e)[0].strip()
-                item['price'] = re.findall(r'<거래금액>(.*?)</거래금액>',e)[0].strip()
-                item['price_deposit'] = ''
-                item['price_monthly'] = ''
+                item['price'] = re.findall(r'<거래금액>(.*?)</거래금액>',e)[0].strip().replace(",","")
+                item['price_deposit'] = 0.0
+                item['price_monthly'] = 0.0
                 item['fnd_year'] = re.findall(r'<건축년도>(.*?)</건축년도>',e)[0].strip()
                 item['sold_date'] = sold_date
                 item['location'] = re.findall(r'<법정동>(.*?)</법정동>',e)[0].strip()
@@ -61,4 +61,4 @@ class RealestatedealSpider(scrapy.Spider):
                 item['bldg_type'] = '01'
                 item['buy_type'] = '01'
                 yield item
-                print(item)
+                # print(item)
