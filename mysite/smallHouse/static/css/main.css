@@ -9,9 +9,12 @@ label { display: none; }
 ul { list-style: none; margin: 0; padding: 0; }
 li { float: left; }
 .btn-lg { padding: 7px 10px; border: 0px; }
-a:hover { cursor: pointer; }
-/* #map > div:nth-child(11) > div > div:nth-child(1) > div:nth-child(3) > div:nth-child(3) > div > div { border-radius: 7px; box-shadow: 1px 1px; } */
+a:hover { cursor: pointer; color: #565eb6;}
+button:hover { background-color: #565eb6; }
 .iw_inner { padding: 10px; padding-top: 0px; border-radius: 7px; box-shadow: 1px 1px; }
+input::-ms-input-placeholder { color: #565eb6; }
+input::-webkit-input-placeholder { color: #565eb6; } 
+input::-moz-placeholder { color: #565eb6; }
 
 .top_layer_keyword { position: absolute; border: 0px; width: 80%; height: 50%; background-color: #fff; }
 .btn_search { float: right; background-repeat: no-repeat; }

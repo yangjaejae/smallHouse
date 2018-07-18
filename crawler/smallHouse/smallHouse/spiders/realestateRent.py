@@ -42,7 +42,6 @@ class RealestaterentSpider(scrapy.Spider):
         for li in data:
             each = li.xpath('//item').extract()
             for e in each:
-                print(re.findall(r'<층>(.*?)</층>',e), "###################################################################")
                 item = RealEstate()
                 if re.findall(r'<연립다세대>(.*?)</연립다세대>',e):
                     item['name'] = re.findall(r'<연립다세대>(.*?)</연립다세대>',e)[0].strip()
@@ -68,4 +67,3 @@ class RealestaterentSpider(scrapy.Spider):
                     item['bldg_type'] = '01'
                     item['buy_type'] = '02'
                 yield item
-                # print(item)

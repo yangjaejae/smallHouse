@@ -4,32 +4,32 @@
 {% block content %}
 <div id="map" class="map" style="position:absolute; height:100%; width: 100%;">
     <div class="container-fluid top_layer" style="padding-right: 0px; padding-left: 0px;">
-        <div class="col-md-3 top_layer_nav">
+        <div class="col-md-3 top_layer_nav" style=" background-color: #565eb6">
             <div class="input-group-lg top_layer_search">
-                <input type="text" class="top_layer_keyword" onkeypress="if( event.keyCode==13 ){goSearch();}" placeholder="동이름을 입력하세요(ex.서초동)"/>
-                <span class="btn btn-lg btn-default btn_search glyphicon glyphicon-search"></span>
+                <input type="text" class="top_layer_keyword" onkeypress="if( event.keyCode==13 ){goSearch();}" placeholder="동이름을 입력하세요(ex.서초동)" style=" background-color: white; color: #565eb6; border-radius: 7px;"/>
+                <span class="btn btn-lg btn-default btn_search glyphicon glyphicon-search" style=" background-color: #565eb6; color: white;"></span>
             </div>
             <nav class="navbar top_layer_filter" style="position: relative; top: 54%;">
                 <div class="" id="">
                     <ul class="">
                         <li class="dropdown">
-                            <a href="#" class="btn btn-default dropdown-toggle" id="dropdown_deal_select" data-toggle="dropdown" role="button">매매</span></a>
-                            <ul class="dropdown-menu" role="menu">
+                            <a href="#" class="btn btn-default dropdown-toggle" id="dropdown_deal_select" data-toggle="dropdown" role="button" style="padding: 29px; padding-bottom: 6px; padding-top: 6px; background-color: #565eb6; color: white; border: 0px;">매매</span></a>
+                            <ul class="dropdown-menu" role="menu" style=" background-color: #565eb6;">
                                 <li>
-                                    <a id="dropdown_deal">매매</a>
+                                    <a id="dropdown_deal" style=" background-color: #565eb6; color: white">매매</a>
                                     <input type="hidden" value="01">
                                 </li>
                                 <li>
-                                    <a id="dropdown_rent">전/월세</a>
+                                    <a id="dropdown_rent" style=" background-color: #565eb6; color: white">전/월세</a>
                                     <input type="hidden" value="02">
                                 </li>
                             </ul>
                         </li>
                         <li class="dropdown">
-                        <button href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown" role="button">주택</span></button>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">다세대 연립</a></li>
-                            <li><a href="#">단독/다가구</a></li>
+                        <button href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown" role="button" style="padding: 29px; padding-bottom: 6px; padding-top: 6px; background-color: #565eb6; color: white; border: 0px;">주택</span></button>
+                        <ul class="dropdown-menu" role="menu" style=" background-color: #565eb6;">
+                            <li><a href="#" style=" background-color: #565eb6; color: white">다세대 연립</a></li>
+                            <li><a href="#" style=" background-color: #565eb6; color: white">단독/다가구</a></li>
                         </ul>
                         </li>
                     </ul>
@@ -37,7 +37,7 @@
             </nav>
         </div>
         <div class="visible-md visible-lg col-md-3 top_layer_info">
-            <div class="info_nav" style="background-color: cornflowerblue; color:white; text-align:center;">
+            <div class="info_nav" style="background-color: #565eb6; color:white; text-align:center;">
                 <div class="visible-xs visible-sm btn_left_news_back"><a class="glyphicon glyphicon-chevron-left" style="color:azure"></a></div>
                 <span><h3>부동산 뉴스</h3></span>
                 <a href="#" class="visible-md visible-lg btn_toggle_content" style="color:white;">접기<span class="caret"></span></a>
@@ -62,10 +62,10 @@
     </div>
     <!-- 클릭 후 상세 정보 -->
     <div class="col-md-3 wrap_info_house_deal">
-        <div class="top_layer_nav">
+        <div class="top_layer_nav" style=" background-color: #565eb6">
             <div class="input-group-lg top_layer_search">
-                <input type="text" class="top_layer_keyword" onkeypress="if( event.keyCode==13 ){goSearch();}" placeholder="검색어를 입력하세요(ex.서초동)"/>
-                <span class="btn btn-lg btn-default btn_search glyphicon glyphicon-search"></span>
+                <input type="text" class="top_layer_keyword" onkeypress="if( event.keyCode==13 ){goSearch();}" placeholder="동이름을 입력하세요(ex.서초동)" style=" background-color: white; color: #565eb6; border-radius: 7px;"/>
+                <span class="btn btn-lg btn-default btn_search glyphicon glyphicon-search" style=" background-color: #565eb6; color: white;"></span>
             </div>
             <div class="sub-filter">
                 <div class="sub-filter-layer">
@@ -447,7 +447,6 @@
     }
 
     function getDetail(paramMap){
-alert(12341234)
         var param = {}
         param = paramMap;
         
