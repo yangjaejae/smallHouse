@@ -2,7 +2,7 @@
 import scrapy
 import re
 from smallHouse.items import RealEstate
-from smallHouse.dao.getLocCode import getCodeList 
+from smallHouse.dao.getLocCode import getCodeList
 
 class RealestatedealSpider(scrapy.Spider):
     name = 'realestateDeal'
@@ -22,7 +22,7 @@ class RealestatedealSpider(scrapy.Spider):
     paramLAWD_CDList = []
 
     fullUrlList = []
-    i = 0    
+    i = 0
     for row in rows:
         paramLAWD_CDList.append("&LAWD_CD=" + row[0])
         fullUrlList.append( url + paramStart + paramKey + paramLAWD_CDList[i] + paramDEAL_YMD )
@@ -40,7 +40,12 @@ class RealestatedealSpider(scrapy.Spider):
         data = response.xpath('//items')
         for li in data:
             each = li.xpath('//item').extract()
+
             for e in each:
+                print(e.encode('utf-8'))
+
+                e = str(e.encode('utf-8'))
+
                 sold_date = ''
                 year = re.findall(r'<년>(.*?)</년>',e)[0]
                 dot = "."

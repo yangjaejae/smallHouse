@@ -13,10 +13,16 @@
                 <div class="" id="">
                     <ul class="">
                         <li class="dropdown">
-                            <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown" role="button">전세/매매</span></a>
+                            <a href="#" class="btn btn-default dropdown-toggle" id="dropdown_deal_select" data-toggle="dropdown" role="button">매매</span></a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a id="main_dropdown_rent" href="#">매매</a></li>
-                                <li><a id="main_dropdown_rent" href="#">전 월세</a></li>
+                                <li>
+                                    <a id="dropdown_deal">매매</a>
+                                    <input type="hidden" value="01">
+                                </li>
+                                <li>
+                                    <a id="dropdown_rent">전/월세</a>
+                                    <input type="hidden" value="02">
+                                </li>
                             </ul>
                         </li>
                         <li class="dropdown">
@@ -71,7 +77,7 @@
         <div class="header_info">
             <div class="house_title">
                 <span class="btn btn-lg btn-default btn_back glyphicon glyphicon-chevron-left" style=""></span>
-                <span><a href="#"><h4 id="detail_name">주택명</h4></a></span>
+                <span><a href="#"><h4 id="detail_name"></h4></a></span>
             </div>
             <div class="text-center address_info">
                 <p id="detail_addr"></p>
@@ -82,10 +88,16 @@
             <div class="" id="">
                 <ul class="">
                     <li class="dropdown">
-                        <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown" role="button">전세/매매</span></a>
+                        <a href="#" class="btn btn-default dropdown-toggle" id="dropdown_deal_select" data-toggle="dropdown" role="button">매매</span></a>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a id="detail_dropdown_deal" href="#">매매</a></li>
-                            <li><a id="detail_dropdown_rent" href="#">전 월세</a></li>
+                            <li>
+                                <a id="dropdown_deal_detail">매매</a>
+                                <input type="hidden" value="01">
+                            </li>
+                            <li>
+                                <a id="dropdown_rent_detail">전/월세</a>
+                                <input type="hidden" value="02">
+                            </li>
                         </ul>
                     </li>
                 </ul>
@@ -168,6 +180,8 @@
     
 </div>
 <script>
+    var buy_type = '01';
+
     //map initiate
     var map = null;
 
@@ -196,7 +210,6 @@
         map = new naver.maps.Map('map', mapOptions);
 
         dataList = listMap.result
-        console.log(dataList)
         var resAddrdetail = "";
         var index = 0;
         for( var i=0; i < dataList.length; i++ ){
@@ -212,10 +225,8 @@
                 items = result.items; // 검색 결과의 배열
                 var lng = items[0].point.x;
                 var lat = items[0].point.y;
-                resAddrdetail = items[0].addrdetail.sido + "-" + items[0].addrdetail.sigugun + "-" + items[0].addrdetail.dongmyun + "-" +  items[0].addrdetail.rest
+                resAddrdetail = items[0].addrdetail.sido + " " + items[0].addrdetail.sigugun + " " + items[0].addrdetail.dongmyun + " " +  items[0].addrdetail.rest
                 var houses = dataList[index]; 
-
-                console.log(houses)
 
                 var marker = new naver.maps.Marker({
                     position: new naver.maps.LatLng(lat, lng),
@@ -228,7 +239,7 @@
                                         '<div class="ico _icon" style=" position: absolute; z-index: 6000; background-image: url(' + '{% static "img/pin/marker_each_green_64*64.png" %}' + '); width: 66px; height: 64px; background-position: -192px -64px;">',
                                             '<div><h6>' + houses.area_average + '평</h6></div>',
                                             '<div><h6>' + houses.price_avg + '억</h6></div>',
-                                            '<div style="display: none"><h6>' + houses.name + '</h6></div>',
+                                            '<div style="display: none"><h6 class="marker_bldg_name">' + houses.name + '</h6></div>',
                                             '<div style="display: none"><h6>' + resAddrdetail + '</h6></div>',
                                         '</div>',
                                     '</div>',
@@ -248,22 +259,19 @@
                 map.setCenter(marker.position);
                 
                 naver.maps.Event.addListener(marker, "click", function(e) {
-                    var content = []
-                    content = e.overlay.icon.content.replace(/(<([^>]+)>)/ig," ").split(/(\s+)/);
+                    
+                    var bldg_name = e.domEvent.toElement.offsetParent.children[2].innerText
+                    var avg_price_floor = e.domEvent.toElement.offsetParent.children[1].innerText
+                    var addr_detail = e.domEvent.toElement.offsetParent.children[3].innerText
+                    console.log(e)
+                    var paramMap = {
+                        bldg_name : bldg_name,
+                        addr_detail : addr_detail,
+                        buy_type : buy_type
+                    }
 
-                    var name = content[6];
-                    var price = content[4];
-                    var fnd_year = content[8];
-                    var addr1 = content[12] + content[14] + "(" + content[18] + "층)" ;
-                    var addr2 = content[20];
+                    getDetail(paramMap)
 
-                    $(".top_layer").hide();
-                    $("#detail_name").text(name);
-                    $("#detail_addr").text(addr1);
-                    $("#detail_addr_detail").text(addr2);
-                    $("#detail_price_avg").text(price);
-                    $(".wrap_info_house_deal").show();
-                
                 });
                         
                 var contentString = [
@@ -306,7 +314,8 @@
             type: 'GET',
             url: '{% url "getAddress" %}', 
             data: {
-                "word": word
+                "word": word,
+                'buy_type': buy_type
             },
             dataType: 'json',
             error: function( jqXHR, textStatus, errorThrown ){
@@ -387,7 +396,6 @@
             success: function(datas){
                 
                 var dataList = datas.result
-                console.log(dataList)
 
                 for( var i=0; i<dataList.length; i++ ){
                     
@@ -438,6 +446,77 @@
         });
     }
 
+    function getDetail(paramMap){
+alert(12341234)
+        var param = {}
+        param = paramMap;
+        
+        if($(".wrap_info_house_deal").hasClass('on')){
+            param = {
+                bldg_name : '',
+                addr_detail : '',
+                buy_type : '',
+                bldg_name : $("#detail_name").text(),
+                addr_detail : $('#detail_addr_detail').text(),
+                buy_type : buy_type
+            }
+        }
+
+
+        $.ajax({
+            type: 'GET',
+            url: '{% url "getDetail" %}', 
+            data: {
+                'paramMap': param
+            },
+            dataType: 'json',
+            error: function( jqXHR, textStatus, errorThrown ){
+                alert('status: ' + textStatus + '\nerror: ' + jqXHR.error )
+            },
+            success: function(datas){
+                
+                var dataList = datas.result
+
+                console.log(datas)
+                var name = datas.result[0].name
+                var addr1 = datas.result[0].location + " " + datas.result[0].loc_num
+                var addr2 = datas.addrDetail
+                var avgPrice = datas.avgPrice 
+
+                $(".top_layer").hide();
+                $("#detail_name").text(name);
+                $("#detail_addr").text(addr1);
+                $("#detail_addr_detail").text(addr2);
+                $("#detail_price_avg").text(avgPrice+"억");
+                
+                var html_table = ''
+                    html_table += '    <table class="table table-hover">'
+                    html_table += '        <tr>';
+                    html_table += '            <th>계약일</th>';
+                    html_table += '            <th>가격</th>';
+                    html_table += '            <th>평수</th>';
+                    html_table += '            <th>층</th>';
+                    html_table += '        </tr>';
+                for( var i=0; i<dataList.length; i++ ){
+
+                    html_table += '        <tr>';
+                    html_table += '            <td>' + dataList[i].sold_date + '</td>'
+                    html_table += '            <td>' + dataList[i].price + '억</td>';
+                    html_table += '            <td>' + dataList[i].area_average + '평</td>';
+                    html_table += '            <td>' + dataList[i].floor + '층</td>';
+                    html_table += '        </tr>';
+                }
+                    html_table += '    </table>;'
+                $(".realPrice_table").html(html_table);
+                $(".wrap_info_house_deal").addClass("on");
+                $(".wrap_info_house_deal").show();
+            
+            }
+
+        });
+
+    }
+
     function updateMarkers(map, markers) {
 
         var mapBounds = map.getBounds();
@@ -469,6 +548,66 @@
     }
 
     $(document).ready(function(){
+
+        //지도 화면
+        $("#dropdown_deal").on('click',function(){
+            $("#dropdown_deal_select").text('매매');
+            buy_type = $(this).next().val();
+            var paramMap = {
+                buy_type : buy_type
+            }
+
+            if($(".wrap_info_house_deal").hasClass('on')){
+                getDetail(paramMap)
+            }else if($(".top_layer_keyword").val()){
+                getAddr()
+            }
+        
+        });
+
+        $("#dropdown_rent").on('click',function(){
+            $("#dropdown_deal_select").text('전/월세');
+            buy_type = $(this).next().val();
+            var paramMap = {
+                buy_type : buy_type
+            }
+
+            if($(".wrap_info_house_deal").hasClass('on')){
+                getDetail(paramMap)
+            }else if($(".top_layer_keyword").val()){
+                getAddr()
+            }
+        });
+
+        //세부화면
+        $("#dropdown_deal_detail").on('click',function(){
+            $("#dropdown_deal_select").text('매매');
+            buy_type = $(this).next().val();
+            var paramMap = {
+                buy_type : buy_type
+            }
+
+            if($(".wrap_info_house_deal").hasClass('on')){
+                getDetail(paramMap)
+            }else if($(".top_layer_keyword").val()){
+                getAddr()
+            }
+        
+        });
+
+        $("#dropdown_rent_detail").on('click',function(){
+            $("#dropdown_deal_select_detail").text('전/월세');
+            buy_type = $(this).next().val();
+            var paramMap = {
+                buy_type : buy_type
+            }
+
+            if($(".wrap_info_house_deal").hasClass('on')){
+                getDetail(paramMap)
+            }else if($(".top_layer_keyword").val()){
+                getAddr()
+            }
+        });
         
         //상단 찾기 버튼
         $(".btn_search").click(function(){
@@ -490,9 +629,16 @@
             }
 
         })
+
         
         //뒤로가기 버튼
         $(".btn_back").click(function(){
+
+            if($(".wrap_info_house_deal").hasClass('on')){
+                $("#detail_name").text("")
+            }
+
+            $(".wrap_info_house_deal").removeClass("on");
             $(".wrap_info_house_deal").hide();
             $(".top_layer").show();
         });
